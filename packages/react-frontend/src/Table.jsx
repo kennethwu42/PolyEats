@@ -4,41 +4,37 @@ function TableHeader() {
   return (
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Job</th>
-        <th>ID</th>
-        <th>Remove</th>
+        <th>Complex</th>
       </tr>
     </thead>
   );
 }
 
 function TableBody(props) {
-  const rows = props.characterData.map((row, index) => {
+  const rows = props.complexData.map((row, index) => {
     return (
       <tr key={index}>
         <td>{row.name}</td>
-        <td>{row.job}</td>
-        <td>{row._id}</td>
-        <td>
-          <button onClick={() => props.removeCharacter(index)}>Delete</button>
-        </td>
       </tr>
     );
-  });
-  return <tbody>{rows}</tbody>;
+   }
+  );
+  return (
+      <tbody>
+        {rows}
+       </tbody>
+   );
 }
 
 function Table(props) {
-  return (
-    <table>
-      <TableHeader />
-      <TableBody
-        characterData={props.characterData}
-        removeCharacter={props.removeCharacter}
-      />
-    </table>
-  );
+    return (
+      <table>
+        <TableHeader />
+        <TableBody 
+          complexData={props.complexData}
+        />
+      </table>
+    );
 }
 
 export default Table;

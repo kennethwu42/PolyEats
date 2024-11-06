@@ -6,13 +6,13 @@ function MyApp() {
   const [complexes, setComplexes] = useState([]);
 
   function fetchComplexes(){
-    const promise = fetch("http://localhost:8000/complexes");
+    return fetch("http://localhost:8000/complexes");
   }
 
   useEffect(() => {
     fetchComplexes()
       .then((res) => res.json())
-      .then((json) => setComplexes(json))
+      .then((json) => setComplexes(json.complexes_list))
       .catch((error) => {
         console.log(error);
       });
