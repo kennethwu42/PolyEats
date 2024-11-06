@@ -19,7 +19,7 @@ const RestaurantSchema = new mongoose.Schema(
       TH: { type: String, default: "CLOSED" },
       F: { type: String, default: "CLOSED" },
       SAT: { type: String, default: "CLOSED" },
-      SUN: { type: String, default: "CLOSED" },
+      SUN: { type: String, default: "CLOSED" }
     },
     avg_rating: {
       type: Number,
@@ -49,7 +49,13 @@ const RestaurantSchema = new mongoose.Schema(
       type: String,
       enum: ["$", "$$", "$$$"],
       default: "$$"
-    }
+    },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review"
+      }
+    ]
   },
   { collection: "restaurants" }
 );

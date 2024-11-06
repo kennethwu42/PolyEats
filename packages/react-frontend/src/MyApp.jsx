@@ -5,9 +5,8 @@ import Table from './Table';
 function MyApp() {
   const [complexes, setComplexes] = useState([]);
 
-  function fetchComplexes() {
+  function fetchComplexes(){
     const promise = fetch("http://localhost:8000/complexes");
-    return promise;
   }
 
   useEffect(() => {

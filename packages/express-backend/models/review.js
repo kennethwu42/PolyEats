@@ -12,6 +12,10 @@ const ReviewSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    rating: {
+      type: Number,
+      required: true
+    },
     pictures: [
       {
         data: Buffer, //binary in MongoDB
