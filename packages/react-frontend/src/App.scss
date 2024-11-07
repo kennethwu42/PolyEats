@@ -1,0 +1,13 @@
+@import "bootstrap/scss/bootstrap";
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; // Adjust the gap as needed
+  padding: 1rem; // Adjust the padding as needed
+}
+
+.card {
+  margin: 0.5rem; // Optional: additional margin
+}

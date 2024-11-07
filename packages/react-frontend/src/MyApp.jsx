@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Table from './Table';
-// import Card from './Components/Card';
+import ComplexList from './Pages/ComplexList';
+import "./App.scss";
 
 function MyApp() {
   const [complexes, setComplexes] = useState([]);
@@ -20,7 +20,7 @@ function MyApp() {
   
   return (
     <div className="container">
-      <Table
+      <ComplexList
         complexData={complexes}
       />
     </div>
