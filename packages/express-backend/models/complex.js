@@ -11,6 +11,4 @@ const ComplexSchema = new mongoose.Schema(
   { collection: "complexes" }
 );
 
-const Complex = mongoose.model("Complex", ComplexSchema);
-
-export default Complex;
+export default mongoose.model("Complex", ComplexSchema);;

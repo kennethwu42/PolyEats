@@ -4,7 +4,7 @@ function TableHeader() {
   return (
     <thead>
       <tr>
-        <th>Complex</th>
+        <th>Complexes</th>
       </tr>
     </thead>
   );
@@ -17,24 +17,24 @@ function TableBody(props) {
         <td>{row.name}</td>
       </tr>
     );
-   }
+  }
   );
   return (
       <tbody>
         {rows}
-       </tbody>
-   );
+      </tbody>
+  );
 }
 
 function Table(props) {
-    return (
-      <table>
-        <TableHeader />
-        <TableBody 
-          complexData={props.complexData}
-        />
-      </table>
-    );
+  return (
+    <table>
+      <TableHeader />
+      <TableBody 
+        complexData={props.complexData}
+      />
+    </table>
+  );
 }
 
 export default Table;
