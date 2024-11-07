@@ -2,9 +2,14 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-// import accountService from "../express-backend/services/account-service.js";
 import complexService from "../express-backend/services/complex-service.js";
 import restaurantService from "../express-backend/services/restaurant-service.js";
+import {
+  authenticateUser,
+  registerUser,
+  loginUser
+} from "../express-backend/auth.js";
+// import accountService from "../express-backend/services/account-service.js";
 // import reviewService from "../express-backend/services/review-service.js";
 
 dotenv.config();
@@ -24,8 +29,11 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
+app.post("/signup", registerUser);
+app.post("/login", loginUser);
+
 //get list of complexes
-app.get("/complexes", (req, res) => {
+app.get("/complexes", authenticateUser, (req, res) => {
   const name = req.query.name;
 
   complexService
@@ -39,7 +47,7 @@ app.get("/complexes", (req, res) => {
 });
 
 //get all restaurants within a specific complex (with filters/sorting if desired)
-app.get("/complexes/:complexId/restaurants", (req, res) => {
+app.get("/complexes/:complexId/restaurants", authenticateUser, (req, res) => {
   const complexId = req.params.complexId;
   const {
     name,
@@ -110,11 +118,9 @@ app.get("/complexes/:complexId/restaurants", (req, res) => {
       res.status(200).send({ restaurants_list: restaurants });
     })
     .catch((error) => {
-      res
-        .status(500)
-        .send({
-          error: "Error fetching/filtering/sorting restaurants in complex"
-        });
+      res.status(500).send({
+        error: "Error fetching/filtering/sorting restaurants in complex"
+      });
     });
 });
 /* For sorting:
@@ -127,7 +133,7 @@ app.get("/complexes/:complexId/restaurants", (req, res) => {
   */
 
 //get specific restaurant by id
-app.get("/restaurant/:id", (req, res) => {
+app.get("/restaurant/:id", authenticateUser, (req, res) => {
   const restaurantId = req.params.id;
 
   restaurantService
