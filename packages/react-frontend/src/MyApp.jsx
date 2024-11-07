@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from "react";
-import ComplexList from './Pages/ComplexList';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Complexes from "./Pages/Complexes";
 import "./App.scss";
 
 function MyApp() {
-  const [complexes, setComplexes] = useState([]);
-
-  function fetchComplexes(){
-    return fetch("http://localhost:8000/complexes");
-  }
-
-  useEffect(() => {
-    fetchComplexes()
-      .then((res) => res.json())
-      .then((json) => setComplexes(json.complexes_list))
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  
   return (
-    <div className="container">
-      <ComplexList
-        complexData={complexes}
-      />
-    </div>
+    <Router>
+      <nav>
+        <Link to="/complexes">Complexes</Link>
+      </nav>
+      <Routes>
+        <Route path="/complexes" element={<Complexes />} />
+      </Routes>
+    </Router>
   );
 }
+
 export default MyApp;
