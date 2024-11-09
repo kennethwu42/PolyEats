@@ -7,7 +7,12 @@ function List({ props }) {
   return (
     <div className="card-container">
       {props.map((row, index) => (
-        <Cards key={index} image={campusMarketImage} title={row.name} />
+        <Cards
+          key={index} 
+          image={row.image || campusMarketImage}  // Fallback to campusMarketImage
+          title={row.name}
+          link={`/complexes/${row._id}/restaurants`}          // Link to each item’s unique page
+        />
       ))}
     </div>
   );
