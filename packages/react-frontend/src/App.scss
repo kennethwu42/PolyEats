@@ -11,3 +11,10 @@
 .card {
   margin: 0.5rem; // Optional: additional margin
 }
+
+.top-image img {
+  width: 20rem; // Full width
+  height: auto; // Maintain aspect ratio
+  display: block;
+  margin-bottom: 1rem;
+}

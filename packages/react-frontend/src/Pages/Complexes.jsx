@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import List from "../components/List";
+import CardList from "../Components/CardList";
+import campusMarketImage from "../assets/campus_market.jpg";
 import "../App.scss";
 
 function Complexes() {
@@ -14,8 +15,11 @@ function Complexes() {
 
   return (
     <div>
+      <div className="top-image">
+        <img src={campusMarketImage} alt="Top Banner" />
+      </div>
       <h1>Complexes</h1>
-      <List props={complexes} />
+      <CardList props={complexes} />
     </div>
   );
 }
