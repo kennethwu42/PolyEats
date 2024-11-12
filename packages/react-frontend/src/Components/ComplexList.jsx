@@ -3,7 +3,7 @@ import Cards from "./Cards";
 import campusMarketImage from "../assets/campus_market.jpg";
 import "../App.scss";
 
-function CardList({ props }) {
+function ComplexList({ props }) {
   return (
     <div className="card-container">
       {props.map((row, index) => (
@@ -18,4 +18,4 @@ function CardList({ props }) {
   );
 }
 
-export default CardList;
+export default ComplexList;

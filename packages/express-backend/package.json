@@ -13,15 +13,19 @@
   "description": "",
   "dependencies": {
     "backend": "^0.0.0",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "mongoose": "^8.8.0"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.1",
+    "nodemailer": "^6.9.16"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.13.0",
-    "eslint": "^9.13.0"
+    "eslint": "^9.13.0",
+    "prettier": "^3.3.3"
   }
 }

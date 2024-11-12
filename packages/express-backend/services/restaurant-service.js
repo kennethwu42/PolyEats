@@ -1,8 +1,16 @@
 import restaurantModel from "../models/restaurant.js";
+import reviewService from "./review-service.js";
 
-//get a single restaurant by ID
-function getRestaurantById(id) {
-  return restaurantModel.findById(id); //populate reviews?
+//get restaurant details along with reviews
+async function getRestaurantWithReviews(restaurantId) {
+  const restaurant = await restaurantModel.findById(restaurantId).exec();
+  if (!restaurant) {
+    throw new Error("Restaurant not found");
+  }
+
+  //fetch all reviews for this restaurant
+  const reviews = await reviewService.getReviewsByRestaurant(restaurantId);
+  return { restaurant, reviews };
 }
 
 //filter and/or sort restaurants in complex based on given criteria
@@ -55,6 +63,6 @@ function getRestaurants(filters, sortField, sortOrder = "asc", complexId) {
 }
 
 export default {
-  getRestaurantById,
+  getRestaurantWithReviews,
   getRestaurants
 };

@@ -49,13 +49,7 @@ const RestaurantSchema = new mongoose.Schema(
       type: String,
       enum: ["$", "$$", "$$$"],
       default: "$$"
-    },
-    reviews: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Review"
-      }
-    ]
+    }
   },
   { collection: "restaurants" }
 );

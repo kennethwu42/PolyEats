@@ -2,7 +2,12 @@ import mongoose from "mongoose";
 
 const AccountSchema = new mongoose.Schema(
   {
-    name: {
+    firstname: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    lastname: {
       type: String,
       required: true,
       trim: true
@@ -18,16 +23,18 @@ const AccountSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+    profile_pic: {
+      data: Buffer, //binary in MongoDB
+      contentType: String
+    },
     favorites: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Restaurant"
-      }
-    ],
-    reviews_given: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Review"
       }
     ]
   },

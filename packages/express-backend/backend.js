@@ -2,10 +2,16 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-// import accountService from "../express-backend/services/account-service.js";
 import complexService from "../express-backend/services/complex-service.js";
 import restaurantService from "../express-backend/services/restaurant-service.js";
-// import reviewService from "../express-backend/services/review-service.js";
+import {
+  authenticateUser,
+  registerUser,
+  loginUser
+} from "../express-backend/auth.js";
+import authRoutes from "../express-backend/auth.js";
+import accountService from "../express-backend/services/account-service.js";
+import reviewService from "../express-backend/services/review-service.js";
 
 dotenv.config();
 
@@ -22,6 +28,107 @@ app.use(express.json());
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
+});
+
+//register auth routes
+app.use("/auth", authRoutes);
+
+app.post("/signup", registerUser);
+app.post("/login", loginUser);
+
+//post a review for a specific restaurant
+app.post("/review", (req, res) => {
+  const reviewData = {
+    ...req.body,
+    author: req.user._id
+  };
+
+  reviewService
+    .postReview(reviewData)
+    .then((review) => res.status(201).send(review))
+    .catch((error) => res.status(500).send({ error: "Error posting review" }));
+});
+
+//delete a review
+app.delete("/review/:reviewId", (req, res) => {
+  const { reviewId } = req.params;
+
+  reviewService
+    .deleteReview(reviewId, req.user._id)
+    .then(() =>
+      res.status(200).send({ message: "Review deleted successfully" })
+    )
+    .catch((error) => res.status(500).send({ error: "Error deleting review" }));
+});
+
+//get account details
+app.get("/account/details", (req, res) => {
+  accountService
+    .getAccountDetails(req.user._id)
+    .then((account) => res.status(200).send({ account }))
+    .catch((error) =>
+      res.status(500).send({ error: "Error fetching account details" })
+    );
+});
+
+//get reviews given by the account
+app.get("/account/reviews", (req, res) => {
+  accountService
+    .getAccountReviews(req.user._id)
+    .then((reviews) => res.status(200).send({ reviews }))
+    .catch((error) =>
+      res.status(500).send({ error: "Error fetching reviews" })
+    );
+});
+
+//get favorite restaurants for the account
+app.get("/account/favorites", (req, res) => {
+  accountService
+    .getFavoriteRestaurants(req.user._id)
+    .then((favorites) => res.status(200).send({ favorites }))
+    .catch((error) =>
+      res.status(500).send({ error: "Error fetching favorite restaurants" })
+    );
+});
+
+//add a restaurant to favorites
+app.post("/account/favorites/:restaurantId", (req, res) => {
+  accountService
+    .addFavoriteRestaurant(req.user._id, req.params.restaurantId)
+    .then((account) =>
+      res
+        .status(201)
+        .send({ message: "Restaurant added to favorites", account })
+    )
+    .catch((error) =>
+      res.status(500).send({ error: "Error adding restaurant to favorites" })
+    );
+});
+
+//remove a restaurant from favorites
+app.delete("/account/favorites/:restaurantId", (req, res) => {
+  accountService
+    .removeFavoriteRestaurant(req.user._id, req.params.restaurantId)
+    .then((account) =>
+      res
+        .status(204)
+        .send({ message: "Restaurant removed from favorites", account })
+    )
+    .catch((error) =>
+      res
+        .status(500)
+        .send({ error: "Error removing restaurant from favorites" })
+    );
+});
+
+//delete account route
+app.delete("/account/delete", (req, res) => {
+  accountService
+    .deleteAccount(req.user._id)
+    .then((response) => res.status(204).send(response))
+    .catch((error) =>
+      res.status(500).send({ error: "Error deleting account" })
+    );
 });
 
 //get list of complexes
@@ -110,11 +217,9 @@ app.get("/complexes/:complexId/restaurants", (req, res) => {
       res.status(200).send({ restaurants_list: restaurants });
     })
     .catch((error) => {
-      res
-        .status(500)
-        .send({
-          error: "Error fetching/filtering/sorting restaurants in complex"
-        });
+      res.status(500).send({
+        error: "Error fetching/filtering/sorting restaurants in complex"
+      });
     });
 });
 /* For sorting:
@@ -126,15 +231,15 @@ app.get("/complexes/:complexId/restaurants", (req, res) => {
   ?sortField=price&sortOrder=desc --> price high to low
   */
 
-//get specific restaurant by id
+//get specific restaurant information by id (with reviews)
 app.get("/restaurant/:id", (req, res) => {
   const restaurantId = req.params.id;
 
   restaurantService
-    .getRestaurantById(restaurantId)
-    .then((restaurant) => {
+    .getRestaurantWithReviews(restaurantId)
+    .then(({ restaurant, reviews }) => {
       if (restaurant) {
-        res.status(200).send({ restaurant: restaurant });
+        res.status(200).send({ restaurant: { restaurant, reviews } });
       } else {
         res.status(404).send("Restaurant not found");
       }

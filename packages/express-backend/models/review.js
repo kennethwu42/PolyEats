@@ -21,7 +21,21 @@ const ReviewSchema = new mongoose.Schema(
         data: Buffer, //binary in MongoDB
         contentType: String
       }
-    ]
+    ],
+    date: {
+      type: Date,
+      default: Date.now
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Account",
+      required: true
+    },
+    restaurant: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Restaurant",
+      required: true
+    }
   },
   { collection: "reviews" }
 );

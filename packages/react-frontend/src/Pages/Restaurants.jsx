@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import campusMarketImage from "../assets/campus_market.jpg";
-import CardList from "../Components/CardList";
+import RestaurantList from "../Components/RestaurantList";
 import "../App.scss";
 
 function Restaurants() {
@@ -21,7 +21,7 @@ function Restaurants() {
         <img src={campusMarketImage} alt="Top Banner" />
       </div>
       <h1>Restaurants</h1>
-      <CardList props={restaurants} />
+      <RestaurantList props={restaurants} />
     </div>
   );
 }

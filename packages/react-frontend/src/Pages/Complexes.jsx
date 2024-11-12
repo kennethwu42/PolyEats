@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CardList from "../Components/CardList";
+import ComplexList from "../Components/ComplexList";
 import campusMarketImage from "../assets/campus_market.jpg";
 import "../App.scss";
 
@@ -19,7 +19,7 @@ function Complexes() {
         <img src={campusMarketImage} alt="Top Banner" />
       </div>
       <h1>Complexes</h1>
-      <CardList props={complexes} />
+      <ComplexList props={complexes} />
     </div>
   );
 }
