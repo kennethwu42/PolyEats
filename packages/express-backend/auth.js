@@ -32,12 +32,25 @@ export function authenticateUser(req, res, next) {
     console.log("No token received");
     res.status(401).end();
   } else {
-    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
-      if (decoded) {
-        next();
-      } else {
+    jwt.verify(token, process.env.TOKEN_SECRET, async (error, decoded) => {
+      if (error) {
         console.log("JWT error:", error);
         res.status(401).end();
+      }
+      try {
+        //optionally fetch user details from the database
+        const user = await Account.findById(decoded.id).select(
+          "_id firstname lastname"
+        );
+        if (!user) {
+          return res.status(401).end();
+        }
+
+        req.user = user; //attach user details to req.user
+        next();
+      } catch (dbError) {
+        console.log("Database error:", dbError);
+        return res.status(500).send("Internal server error");
       }
     });
   }

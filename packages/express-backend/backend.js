@@ -37,7 +37,7 @@ app.post("/signup", registerUser);
 app.post("/login", loginUser);
 
 //post a review for a specific restaurant
-app.post("/review", (req, res) => {
+app.post("/review", authenticateUser, (req, res) => {
   const reviewData = {
     ...req.body,
     author: req.user._id
@@ -50,7 +50,7 @@ app.post("/review", (req, res) => {
 });
 
 //delete a review
-app.delete("/review/:reviewId", (req, res) => {
+app.delete("/review/:reviewId", authenticateUser, (req, res) => {
   const { reviewId } = req.params;
 
   reviewService
@@ -62,7 +62,7 @@ app.delete("/review/:reviewId", (req, res) => {
 });
 
 //get account details
-app.get("/account/details", (req, res) => {
+app.get("/account/details", authenticateUser, (req, res) => {
   accountService
     .getAccountDetails(req.user._id)
     .then((account) => res.status(200).send({ account }))
@@ -72,7 +72,7 @@ app.get("/account/details", (req, res) => {
 });
 
 //get reviews given by the account
-app.get("/account/reviews", (req, res) => {
+app.get("/account/reviews", authenticateUser, (req, res) => {
   accountService
     .getAccountReviews(req.user._id)
     .then((reviews) => res.status(200).send({ reviews }))
@@ -82,7 +82,7 @@ app.get("/account/reviews", (req, res) => {
 });
 
 //get favorite restaurants for the account
-app.get("/account/favorites", (req, res) => {
+app.get("/account/favorites", authenticateUser, (req, res) => {
   accountService
     .getFavoriteRestaurants(req.user._id)
     .then((favorites) => res.status(200).send({ favorites }))
@@ -92,7 +92,7 @@ app.get("/account/favorites", (req, res) => {
 });
 
 //add a restaurant to favorites
-app.post("/account/favorites/:restaurantId", (req, res) => {
+app.post("/account/favorites/:restaurantId", authenticateUser, (req, res) => {
   accountService
     .addFavoriteRestaurant(req.user._id, req.params.restaurantId)
     .then((account) =>
@@ -106,7 +106,7 @@ app.post("/account/favorites/:restaurantId", (req, res) => {
 });
 
 //remove a restaurant from favorites
-app.delete("/account/favorites/:restaurantId", (req, res) => {
+app.delete("/account/favorites/:restaurantId", authenticateUser, (req, res) => {
   accountService
     .removeFavoriteRestaurant(req.user._id, req.params.restaurantId)
     .then((account) =>
@@ -122,7 +122,7 @@ app.delete("/account/favorites/:restaurantId", (req, res) => {
 });
 
 //delete account route
-app.delete("/account/delete", (req, res) => {
+app.delete("/account/delete", authenticateUser, (req, res) => {
   accountService
     .deleteAccount(req.user._id)
     .then((response) => res.status(204).send(response))
