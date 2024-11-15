@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import complexService from "../express-backend/services/complex-service.js";
 import restaurantService from "../express-backend/services/restaurant-service.js";
 // import reviewService from "../express-backend/services/review-service.js";
+import favoritesService from "./services/favorites-service.js";
 
 dotenv.config();
 
@@ -143,3 +144,12 @@ app.get("/restaurant/:id", (req, res) => {
       res.status(500).send({ error: "Error fetching restaurant" });
     });
 });
+
+// get all favorite restaurants for a user
+app.get("/user/:userId/favorites", async (req, res) => {
+  try {
+    const favorites = await favoritesService.getFavoritesByUser(req.params.userId);
+  }
+})
+
+
