@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import campusMarketImage from "../assets/campus_market.jpg";
+import logo from "../assets/logo.png";
 import RestaurantList from "../Components/RestaurantList";
 import "../App.scss";
 
@@ -18,9 +18,9 @@ function Restaurants() {
   return (
     <div>
       <div className="top-image">
-        <img src={campusMarketImage} alt="Top Banner" />
+        <img src={logo} alt="Top Banner" />
       </div>
-      <h1>Restaurants</h1>
+      <h1>"Restaurants"</h1>
       <RestaurantList props={restaurants} />
     </div>
   );

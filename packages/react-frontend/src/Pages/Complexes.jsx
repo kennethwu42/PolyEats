@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ComplexList from "../Components/ComplexList";
-import campusMarketImage from "../assets/campus_market.jpg";
+import logo from "../assets/logo.png";
 import "../App.scss";
 
 function Complexes() {
@@ -16,7 +16,7 @@ function Complexes() {
   return (
     <div>
       <div className="top-image">
-        <img src={campusMarketImage} alt="Top Banner" />
+        <img src={logo} alt="Top Banner" />
       </div>
       <h1>Complexes</h1>
       <ComplexList props={complexes} />
