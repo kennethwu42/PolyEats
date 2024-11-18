@@ -10,6 +10,19 @@ function RestaurantReviews() {
   const { id } = useParams(); // Get restaurant ID from URL
   const [restaurant, setRestaurant] = useState([]); // Restaurant object
   const [reviews, setReviews] = useState([]); // Reviews array
+  const [isEditing, setIsEditing] = useState([]); // To toggle between view and edit mode
+  const [newTitle, setNewTitle] = useState("Reviews");
+
+  // Handle the Enter key press to save the data
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      saveData();
+    }
+  };
+
+  const saveData = () => {
+    setIsEditing(false);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:8000/restaurant/${id}`)
@@ -32,12 +45,23 @@ function RestaurantReviews() {
       </div>
       <h1>Reviews</h1>
       <div className="top-image">
-        <Card style={{ width: "20rem" }}>
-          <div style={{ height: "200px", backgroundColor: "#86d561" }}></div>
-            <Card.Body>
-            <Card.Title>Write Review</Card.Title>
-            </Card.Body>
-        </Card>
+      <Card className="card">
+        <div className="card-img" style={{ backgroundColor: "#1a602a" }}></div>
+        <Card.Title className="card-title">{"Post Review"}</Card.Title>
+        <Card.Body>
+          {isEditing ? (
+            <input
+              type="text"
+              onChange={(e) => setNewTitle(e.target.value)}
+              onKeyDown={handleKeyPress}
+              onBlur={saveData}
+              autoFocus
+            />
+          ) : (
+            <Card.Title onClick={() => setIsEditing(true)}>{newTitle}</Card.Title>
+          )}
+        </Card.Body>
+      </Card>
       </div>
       <div className="top-image">
         <Cards 

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Cards({ color, title, link }) {
   return (
     <Link to={link} style={{ textDecoration: "none", color: "inherit" }}>
-      <Card classname="card">
+      <Card className="card">
         <div className="card-img" style={{ height: "200px", backgroundColor: color }}></div>
         <Card.Body>
           <Card.Title className="card-title">{title}</Card.Title>
