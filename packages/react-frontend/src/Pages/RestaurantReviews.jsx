@@ -30,7 +30,7 @@ function RestaurantReviews() {
       <div className="top-image">
         <img src={logo} alt="Top Banner" />
       </div>
-      <h1>{restaurant.name} - Reviews</h1>
+      <h1>Reviews</h1>
       <div className="top-image">
         <Card style={{ width: "20rem" }}>
           <div style={{ height: "200px", backgroundColor: "#86d561" }}></div>

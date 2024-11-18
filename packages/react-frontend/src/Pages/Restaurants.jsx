@@ -20,7 +20,7 @@ function Restaurants() {
       <div className="top-image">
         <img src={logo} alt="Top Banner" />
       </div>
-      <h1>"Restaurants"</h1>
+      <h1>  Restaurants</h1>
       <RestaurantList props={restaurants} />
     </div>
   );
