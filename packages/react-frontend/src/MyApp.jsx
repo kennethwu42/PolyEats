@@ -16,7 +16,7 @@ import AccountPage from "./Components/AccountPage.jsx"
 import FavoritesPage from "./Components/FavoritesPage.jsx"
 
 function MyApp() {
-  const API_PREFIX = "polyeats-b6d9cdecaygmgpa0.westus3-01.azurewebsites.net";
+  const API_PREFIX = "https://polyeats-b6d9cdecaygmgpa0.westus3-01.azurewebsites.net";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(
     localStorage.getItem("authToken") || INVALID_TOKEN
