@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import campusMarketImage from "../../assets/campus_market.jpg";
