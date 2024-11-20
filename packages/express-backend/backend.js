@@ -13,7 +13,7 @@ import authRoutes from "../express-backend/auth.js";
 import accountService from "../express-backend/services/account-service.js";
 import reviewService from "../express-backend/services/review-service.js";
 import { upload, convertHeicToJpeg } from "./uploadMiddleware.js";
-import path from "path"
+import path from "path";
 
 dotenv.config();
 
@@ -66,27 +66,31 @@ app.delete("/review/:reviewId", authenticateUser, (req, res) => {
 });
 
 //upload or update profile picture
-app.post("/account/profile-pic", authenticateUser, upload.single("profile_pic"), convertHeicToJpeg, (req, res) => {
-  const userId = req.user._id;
-  const profile_pic = req.file
-    ? `uploads/${req.file.filename}` // Relative path for static serving
-    : "uploads/defaultprofilepic.jpeg";
+app.post(
+  "/account/profile-pic",
+  authenticateUser,
+  upload.single("profile_pic"),
+  convertHeicToJpeg,
+  (req, res) => {
+    const userId = req.user._id;
+    const profile_pic = req.file
+      ? `uploads/${req.file.filename}` // Relative path for static serving
+      : "uploads/defaultprofilepic.jpeg";
 
-  accountService
-    .updateProfilePicture(userId, profile_pic)
-    .then((updatedAccount) =>
-      res.status(200).send({
-        message: "Profile picture updated successfully",
-        profile_pic: updatedAccount.profile_pic
-      })
-    )
-    .catch((error) => {
-      console.error("Error updating profile picture:", error);
-      res.status(500).send({ error: "Error updating profile picture" });
-    });
+    accountService
+      .updateProfilePicture(userId, profile_pic)
+      .then((updatedAccount) =>
+        res.status(200).send({
+          message: "Profile picture updated successfully",
+          profile_pic: updatedAccount.profile_pic
+        })
+      )
+      .catch((error) => {
+        console.error("Error updating profile picture:", error);
+        res.status(500).send({ error: "Error updating profile picture" });
+      });
   }
 );
-
 
 //get account details
 app.get("/account/details", authenticateUser, (req, res) => {
