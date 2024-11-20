@@ -91,7 +91,7 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
       <div className="account-header">
         <label htmlFor="profile-pic-upload">
           <img
-            src={`http://localhost:8000/${account.profile_pic}`}
+            src={`${API_PREFIX}/${account.profile_pic}`}
             alt="Profile"
             className="profile-pic"
           />

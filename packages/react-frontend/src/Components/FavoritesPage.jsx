@@ -51,7 +51,7 @@ const FavoritesPage = ({ API_PREFIX, addAuthHeader }) => {
           favorites.map((restaurant) => (
             <div key={restaurant._id} className="favorite-card">
               <img
-                src={campusMarketImage} //`http://localhost:8000/${restaurant.image}
+                src={campusMarketImage} //`${API_PREFIX}/${restaurant.image}
                 alt={restaurant.name}
                 className="favorite-image"
               />
