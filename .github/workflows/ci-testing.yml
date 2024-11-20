@@ -2,7 +2,7 @@ name: CI Testing
 
 on:
   push:
-    branches: sprint2test
+    branches: [sprint2test]
 
 jobs:
   build:
