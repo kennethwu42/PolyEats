@@ -126,20 +126,4 @@ app.get("/complexes/:complexId/restaurants", (req, res) => {
   ?sortField=price&sortOrder=desc --> price high to low
   */
 
-//get specific restaurant by id
-app.get("/restaurant/:id", (req, res) => {
-  const restaurantId = req.params.id;
 
-  restaurantService
-    .getRestaurantById(restaurantId)
-    .then((restaurant) => {
-      if (restaurant) {
-        res.status(200).send({ restaurant: restaurant });
-      } else {
-        res.status(404).send("Restaurant not found");
-      }
-    })
-    .catch((error) => {
-      res.status(500).send({ error: "Error fetching restaurant" });
-    });
-});
