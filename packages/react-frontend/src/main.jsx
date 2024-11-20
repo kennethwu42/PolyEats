@@ -1,4 +1,4 @@
-import React from "react";
+import from "react";
 import ReactDOMClient from "react-dom/client";
 import MyApp from "./MyApp";
 import "./main.css";
