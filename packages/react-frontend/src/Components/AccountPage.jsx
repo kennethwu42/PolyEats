@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../Styles/AccountPage.scss";
 
 const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
