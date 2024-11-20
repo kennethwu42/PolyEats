@@ -5,7 +5,7 @@
   "main": "backend.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "lint": "npx eslint . && npx prettier --check ."
+    "lint": "npx eslint . && npx prettier --check .",
     "dev": "npx nodemon backend.js",
     "start": "node backend.js"
   },
