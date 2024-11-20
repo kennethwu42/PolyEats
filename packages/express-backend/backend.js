@@ -143,3 +143,17 @@ app.get("/restaurant/:id", (req, res) => {
       res.status(500).send({ error: "Error fetching restaurant" });
     });
 });
+
+//get list of complexes
+app.get("/complexes", (req, res) => {
+  const name = req.query.name;
+
+  complexService
+    .getComplexes(name)
+    .then((complexes) => {
+      res.status(200).send({ complexes_list: complexes });
+    })
+    .catch((error) => {
+      res.status(500).send({ error: "Error fetching complexes" });
+    });
+});
