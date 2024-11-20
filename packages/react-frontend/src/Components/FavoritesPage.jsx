@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../Styles/FavoritesPage.scss";
 import campusMarketImage from "../assets/campus_market.jpg";
 
