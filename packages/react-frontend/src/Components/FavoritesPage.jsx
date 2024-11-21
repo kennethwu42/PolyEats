@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../Styles/FavoritesPage.scss";
-import campusMarketImage from "../assets/campus_market.jpg";
+import campusMarketImage from "../Assets/campus_market.jpg";
 
 const FavoritesPage = ({ API_PREFIX, addAuthHeader }) => {
   const [favorites, setFavorites] = useState([]);
