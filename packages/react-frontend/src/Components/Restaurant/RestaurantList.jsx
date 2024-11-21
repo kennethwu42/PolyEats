@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import campusMarketImage from "../../assets/campus_market.jpg";
+import campusMarketImage from "../../Assets/campus_market.jpg";
 
 const RestaurantList = ({ API_PREFIX, addAuthHeader }) => {
   const { complexId } = useParams();
