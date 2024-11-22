@@ -1,8 +1,4 @@
 name: Azure Static Web Apps CI/CD
-env:
-  APP_LOCATION: "react-frontend" # location of your client code
-  #API_LOCATION: "api" # location of your api source code - optional
-  APP_ARTIFACT_LOCATION: "build" #"build" # location of client code build output
 
 on:
   push:
