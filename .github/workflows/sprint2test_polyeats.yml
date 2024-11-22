@@ -44,16 +44,16 @@ jobs:
           name: node-app
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
+
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_759145099E40413BBDD1627E1764CF06 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3010CBD304D74B399DA0BCEF782185CC }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E116A91C2D3848E597B1C2DFA44076E3 }}
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'PolyEats'
           slot-name: 'Production'
