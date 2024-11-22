@@ -17,13 +17,13 @@ import path from "path";
 
 dotenv.config();
 
-const { MONGO_CONNECTION_STRING } = process.env;
+const { MONGODB_URI } = process.env;
 
 mongoose.set("debug", true);
-mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
+mongoose.connect(MONGODB_URI).catch((error) => console.log(error));
 
 const app = express();
-const port = 5000;
+const port = 8000;
 
 app.use("*", cors());
 app.use(express.json());
