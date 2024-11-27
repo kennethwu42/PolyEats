@@ -10,9 +10,7 @@ export function VerifyEmail({ API_PREFIX }) {
     const token = params.get("token");
 
     if (token) {
-      fetch(
-        `${API_PREFIX}/auth/verify-email?token=${token}`
-      )
+      fetch(`${API_PREFIX}/auth/verify-email?token=${token}`)
         .then((response) => {
           if (response.ok) {
             setMessage("Email successfully verified! Redirecting...");

@@ -4,12 +4,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import complexService from "./services/complex-service.js";
 import restaurantService from "./services/restaurant-service.js";
-import {
-  authenticateUser,
-  registerUser,
-  loginUser, 
-  authRoutes
-} from "./auth.js";
+import { authenticateUser, registerUser, loginUser } from "./auth.js";
+import authRoutes from "./auth.js";
 import accountService from "./services/account-service.js";
 import reviewService from "./services/review-service.js";
 import { upload, convertHeicToJpeg } from "./uploadMiddleware.js";
