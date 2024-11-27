@@ -31,6 +31,10 @@ app.use("/uploads", express.static("../uploads"));
 //register auth routes
 app.use("/auth", authRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the PolyEats App!");
+});
+
 app.post("/signup", registerUser);
 app.post("/login", loginUser);
 
