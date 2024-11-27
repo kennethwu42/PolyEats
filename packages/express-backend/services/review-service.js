@@ -40,7 +40,7 @@ async function updateRestaurantRating(restaurantId) {
     const avgRating =
       reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
     await restaurantModel.findByIdAndUpdate(restaurantId, {
-      avg_rating: avgRating.toFixed(1), // Rounded to 1 decimal place
+      avg_rating: avgRating.toFixed(1) // Rounded to 1 decimal place
     });
   }
 }

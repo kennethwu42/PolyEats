@@ -78,36 +78,36 @@ const Reviews = ({
   };
 
   // Handle deleting a review
-const handleDeleteReview = async (reviewId) => {
-  try {
-    const response = await fetch(`${API_PREFIX}/review/${reviewId}`, {
-      method: "DELETE",
-      headers: addAuthHeader()
-    });
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      const response = await fetch(`${API_PREFIX}/review/${reviewId}`, {
+        method: "DELETE",
+        headers: addAuthHeader()
+      });
 
-    if (response.ok) {
-      setReviews((prevReviews) =>
-        prevReviews.filter((review) => review._id !== reviewId)
-      );
-      toast.success("Review deleted successfully");
+      if (response.ok) {
+        setReviews((prevReviews) =>
+          prevReviews.filter((review) => review._id !== reviewId)
+        );
+        toast.success("Review deleted successfully");
 
-      // Refresh restaurant details to update the average rating
-      const restaurantResponse = await fetch(
-        `${API_PREFIX}/restaurant/${restaurantId}`,
-        { headers: addAuthHeader() }
-      );
-      if (restaurantResponse.ok) {
-        const data = await restaurantResponse.json();
-        setRestaurant(data.restaurant.restaurant);
+        // Refresh restaurant details to update the average rating
+        const restaurantResponse = await fetch(
+          `${API_PREFIX}/restaurant/${restaurantId}`,
+          { headers: addAuthHeader() }
+        );
+        if (restaurantResponse.ok) {
+          const data = await restaurantResponse.json();
+          setRestaurant(data.restaurant.restaurant);
+        }
+      } else {
+        toast.error("Error deleting review");
       }
-    } else {
+    } catch (error) {
+      console.error("Error deleting review:", error);
       toast.error("Error deleting review");
     }
-  } catch (error) {
-    console.error("Error deleting review:", error);
-    toast.error("Error deleting review");
-  }
-};
+  };
 
   return (
     <div className="reviews-section">
@@ -120,8 +120,7 @@ const handleDeleteReview = async (reviewId) => {
           <div
             key={review._id}
             className="review-card"
-            onClick={() => navigate(`/restaurant/${review.restaurant}`)}
-          >
+            onClick={() => navigate(`/restaurant/${review.restaurant}`)}>
             <div className="header">
               <img
                 src={`${API_PREFIX}/${review.author?.profile_pic}`}
