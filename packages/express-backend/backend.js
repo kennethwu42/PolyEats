@@ -2,16 +2,16 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import complexService from "../express-backend/services/complex-service.js";
-import restaurantService from "../express-backend/services/restaurant-service.js";
+import complexService from "./services/complex-service.js";
+import restaurantService from "./services/restaurant-service.js";
 import {
   authenticateUser,
   registerUser,
-  loginUser
-} from "../express-backend/auth.js";
-import authRoutes from "../express-backend/auth.js";
-import accountService from "../express-backend/services/account-service.js";
-import reviewService from "../express-backend/services/review-service.js";
+  loginUser, 
+  authRoutes
+} from "./auth.js";
+import accountService from "./services/account-service.js";
+import reviewService from "./services/review-service.js";
 import { upload, convertHeicToJpeg } from "./uploadMiddleware.js";
 
 dotenv.config();
