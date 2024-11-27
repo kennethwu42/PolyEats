@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function VerifyEmail() {
+export function VerifyEmail({ API_PREFIX }) {
   const [message, setMessage] = useState("Verifying your email...");
   const navigate = useNavigate();
 
@@ -10,7 +10,9 @@ export function VerifyEmail() {
     const token = params.get("token");
 
     if (token) {
-      fetch(`http://localhost:8000/auth/verify-email?token=${token}`)
+      fetch(
+        `${API_PREFIX}/auth/verify-email?token=${token}`
+      )
         .then((response) => {
           if (response.ok) {
             setMessage("Email successfully verified! Redirecting...");
