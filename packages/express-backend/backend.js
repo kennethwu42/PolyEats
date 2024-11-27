@@ -27,8 +27,8 @@ const port = 8000;
 app.use("*", cors());
 app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log("REST API is listening.");
 });
 
 app.use("/uploads", express.static("../uploads"));
