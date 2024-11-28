@@ -41,6 +41,9 @@ function generateAccessToken(calpoly_email) {
 }
 
 export function authenticateUser(req, res, next) {
+  if (req.method === "OPTIONS") {
+    return next();
+  }
   const authHeader = req.headers["authorization"];
   // Getting the 2nd part of the auth header (the token)
   const token = authHeader && authHeader.split(" ")[1];

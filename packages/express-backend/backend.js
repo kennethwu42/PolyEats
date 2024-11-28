@@ -22,7 +22,12 @@ app.use(
   cors({
     origin: "https://ashy-beach-00ce8fa1e.4.azurestaticapps.net",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Accept",
+      "X-Requested-With"
+    ]
   })
 );
 
