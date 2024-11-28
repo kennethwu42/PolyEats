@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import complexService from "./services/complex-service.js";
@@ -20,7 +19,6 @@ mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
 const app = express();
 app.use(express.json());
 
-const cors = require("cors");
 app.use(cors({ origin: "https://ashy-beach-00ce8fa1e.4.azurestaticapps.net" }));
 
 app.listen(process.env.PORT, () => {
