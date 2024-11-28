@@ -19,7 +19,7 @@ import FavoritesPage from "./Components/FavoritesPage.jsx";
 
 function MyApp() {
   const API_PREFIX =
-    "http://polyeats-b6d9cdecaygmgpa0.westus-01.azurewebsites.net";
+    "https://polyeats-b6d9cdecaygmgpa0.westus-01.azurewebsites.net";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(
     localStorage.getItem("authToken") || INVALID_TOKEN
