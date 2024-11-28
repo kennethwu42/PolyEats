@@ -19,8 +19,15 @@ mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
 
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: "https://ashy-beach-00ce8fa1e.4.azurestaticapps.net",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
+);
 
-app.use(cors({ origin: "https://ashy-beach-00ce8fa1e.4.azurestaticapps.net" }));
+app.options("*", cors());
 
 app.listen(process.env.PORT, () => {
   console.log("REST API is listening.");
