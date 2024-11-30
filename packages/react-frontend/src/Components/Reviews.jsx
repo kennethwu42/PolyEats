@@ -20,6 +20,7 @@ const Reviews = ({
     rating: "",
     pictures: []
   });
+  const [uploadStatus, setUploadStatus] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -31,13 +32,41 @@ const Reviews = ({
     setReviewData({ ...reviewData, pictures: Array.from(e.target.files) });
   };
 
+  const handlePicturesUpload = async (files) => {
+    const formData = new FormData();
+    Array.from(files).forEach((file) => formData.append("image", file));
+
+    try {
+      const response = await fetch(`${API_PREFIX}/uploadImage`, {
+        method: "POST",
+        headers: addAuthHeader(),
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload images");
+      }
+
+      const data = await response.json();
+      setUploadStatus("Images uploaded successfully!");
+      return data.imageUrls; // Backend should return an array of uploaded image URLs
+    } catch (error) {
+      console.error("Image upload error:", error);
+      toast.error("Error uploading images");
+      return [];
+    }
+  };
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
+
+    const uploadedPictures = await handlePicturesUpload(reviewData.pictures);
 
     const reviewPayload = {
       item: reviewData.item,
       review: reviewData.review,
       rating: reviewData.rating,
+      pictures: uploadedPictures, 
       restaurant: restaurantId
     };
 

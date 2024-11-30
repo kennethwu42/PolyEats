@@ -1,5 +1,14 @@
 import reviewModel from "../models/review.js";
 import restaurantModel from "../models/restaurant.js";
+import { Storage } from "@google-cloud/storage";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Get the __dirname equivalent
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const storage = new Storage({ keyFilename: path.join(__dirname, "../gcp-key.json") });
 
 //post a new review
 async function postReview(reviewData) {
@@ -45,8 +54,34 @@ async function updateRestaurantRating(restaurantId) {
   }
 }
 
+
+const uploadImageToCloud = (file) => {
+  const blob = bucket.file(Date.now() + "-" + file.originalname);
+  const blobStream = blob.createWriteStream({
+    resumable: false,
+    metadata: { contentType: file.mimetype },
+  });
+
+  blobStream.on("error", reject);
+
+  blobStream.on("finish", () => {
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+    resolve(publicUrl);
+  });
+
+  blobStream.end(file.buffer);
+};
+
+const saveImageToDatabase = async (imageUrl) => {
+  const image = new Image({ imageUrl });
+  await image.save();
+  return image;
+};
+
 export default {
   postReview,
   deleteReview,
-  getReviewsByRestaurant
+  getReviewsByRestaurant,
+  uploadImageToCloud,
+  saveImageToDatabase
 };

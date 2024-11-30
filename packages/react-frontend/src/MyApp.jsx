@@ -113,12 +113,12 @@ function MyApp() {
     return promise;
   }
 
-  function logoutUser(showLogoutMessage = true) {
-    setToken(INVALID_TOKEN);
-    if (showLogoutMessage) {
-      toast.info("You have been logged out");
-    }
+function logoutUser(showLogoutMessage = true) {
+  setToken(INVALID_TOKEN);
+  if (showLogoutMessage) {
+    toast.info("You have been logged out");
   }
+}
 
   return (
     <div className="container">

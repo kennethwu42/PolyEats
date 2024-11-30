@@ -13,6 +13,7 @@ import authRoutes from "../express-backend/auth.js";
 import accountService from "../express-backend/services/account-service.js";
 import reviewService from "../express-backend/services/review-service.js";
 import { upload, convertHeicToJpeg } from "./uploadMiddleware.js";
+import multer from "multer";
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
 
 const app = express();
 const port = 8000;
+
+const mupload = multer({ storage: multer.memoryStorage() });
 
 app.use("*", cors());
 app.use(express.json());
@@ -127,6 +130,30 @@ app.get("/account/reviews", authenticateUser, (req, res) => {
     .catch((error) =>
       res.status(500).send({ error: "Error fetching reviews" })
     );
+});
+
+app.post("/uploadImage", authenticateUser, mupload.single("image"), (req, res) => {
+  console.log("backend");
+
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded." });
+  }
+  
+  reviewService.
+  uploadImageToCloud(req.file)
+    .then((imageUrl) => reviewService.saveImageToDatabase(imageUrl))
+    .then((savedImage) => {
+      res.status(200).json({
+        message: "Image uploaded successfully",
+        data: savedImage,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Error uploading image",
+        error: error.message,
+      });
+    });
 });
 
 //get favorite restaurants for the account
