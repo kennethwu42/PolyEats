@@ -3,12 +3,17 @@ import restaurantModel from "../models/restaurant.js";
 import { Storage } from "@google-cloud/storage";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+dotenv.config();
+const { GCLOUD_BUCKET_NAME } = process.env;
 
 // Get the __dirname equivalent
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const storage = new Storage({ keyFilename: path.join(__dirname, "../gcp-key.json") });
+const bucket = storage.bucket(GCLOUD_BUCKET_NAME);
 
 //post a new review
 async function postReview(reviewData) {
