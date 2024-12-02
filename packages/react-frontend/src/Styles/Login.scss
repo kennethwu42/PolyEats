@@ -1,0 +1,50 @@
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a602a;
+    text-align: center;
+    flex-direction: column;
+    padding: 113px; /* Reduce padding for better layout */
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+
+      /* Style for the Link component */
+  a {
+    color: #60c874; /* Change to your desired color */
+    text-decoration: none; /* Optional: remove underline */
+  }
+
+  /* Optional: Hover effect for the Link */
+  a:hover {
+    color: #60c874; /* Change to your desired hover color */
+  }
+}
+
+.login-page label {
+    text-align: left;  /* Align labels to the left to avoid stacking of text */
+    margin-top: 10px;  /* Add spacing between elements */
+}
+
+.login-page input {
+    margin-bottom: 20px; /* Add space between form elements */
+    padding: 10px;
+    width: 100%;
+    max-width: 300px; /* Limit input width for better appearance */
+}
+
+.login-page input[type="button"] {
+    width: 100%;
+    max-width: 300px;
+    background-color: #60c874;
+    color: rgb(18, 62, 12);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-page input[type="button"]:hover {
+    background-color: #60c874;
+}

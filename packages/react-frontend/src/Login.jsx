@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Styles/Login.scss";
 
 function Login(props) {
   const [creds, setCreds] = useState({
@@ -26,7 +27,7 @@ function Login(props) {
   }
 
   return (
-    <div>
+    <div className="login-page">
       <form>
         {props.buttonLabel === "Sign Up" && (
           <div>

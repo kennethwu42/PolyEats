@@ -1,0 +1,39 @@
+
+.welcome-page {
+  text-align: center;
+  padding: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../Assets/welcome.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.welcome-buttons {
+  margin-top: 20px;
+  display: flex; /* Aligns buttons in a row */
+  gap: 30px; /* Adds spacing between buttons */
+  justify-content: center; /* Centers buttons */
+}
+
+.welcome-btn {
+  margin: 0px;
+  padding: 10px 30px;
+  font-size: 16px;
+  background-color: #60c874;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.welcome-btn:hover {
+  background-color: #60c874;
+  transform: scale(1.1);
+}
