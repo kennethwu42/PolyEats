@@ -1,0 +1,30 @@
+.close-modal-button {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    background-color: #dc3545; /* Red background */
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #c82333;
+    }
+}
+
+.filter-sort-buttons {
+    display: flex;
+    gap: 10px; /* Adds spacing between the buttons */
+    margin-bottom: 20px; /* Adds spacing below the buttons */
+}
+
+.filter-sort-buttons .btn {
+    text-align: center; /* Centers the text */
+}

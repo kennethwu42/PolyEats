@@ -128,76 +128,78 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
     }
   };
 
-  if (!account) {
-    return <p>Loading account details...</p>;
-  }
-
   return (
-    <div className="account-page">
-      <h2>Account</h2>
-      <div className="account-header">
-        <img
-          src={`${API_PREFIX}/${account.profile_pic}`}
-          alt="Profile"
-          className="profile-pic"
-          onClick={handleProfilePicClick}
-        />
-        <input
-          type="file"
-          id="profile-pic-upload"
-          accept="image/*"
-          onChange={handleFileUpload}
-          style={{ display: "none" }}
-        />
-        <h2>
-          {account.firstname} {account.lastname}
-        </h2>
-      </div>
+    <div>
+      <h1>Account</h1>
+      {!account ? (<p>Loading account details...</p>) :  // Display this while loading
+        (<div className="account-page">
+          <div className="account-header">
+            <img
+              src={`${API_PREFIX}/${account.profile_pic}`}
+              alt="Profile"
+              className="profile-pic"
+              onClick={handleProfilePicClick}
+            />
+            <input
+              type="file"
+              id="profile-pic-upload"
+              accept="image/*"
+              onChange={handleFileUpload}
+              style={{ display: "none" }}
+            />
+            <h2>
+              {account.firstname} {account.lastname}
+            </h2>
+          </div>
 
-      {showProfilePicOptions && (
-        <div className="modal">
-          <div className="modal-content">
-            <p>Edit Profile Picture</p>
-            <button
-              onClick={() =>
-                document.getElementById("profile-pic-upload").click()
-              }>
-              Change Profile Picture
-            </button>
-            <button
-              onClick={() => {
-                removeProfilePicture();
-              }}>
-              Remove Profile Picture
-            </button>
-            <button onClick={() => setShowProfilePicOptions(false)}>
-              Cancel
+          {showProfilePicOptions && (
+            <div className="modal">
+              <div className="modal-content">
+                <p>Edit Profile Picture</p>
+                <button
+                  onClick={() =>
+                    document.getElementById("profile-pic-upload").click()
+                  }>
+                  Change Profile Picture
+                </button>
+                <button
+                  onClick={() => {
+                    removeProfilePicture();
+                  }}>
+                  Remove Profile Picture
+                </button>
+                <button onClick={() => setShowProfilePicOptions(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+          <Reviews
+            reviews={reviews}
+            setReviews={setReviews}
+            API_PREFIX={API_PREFIX}
+            editable={false}
+            addAuthHeader={addAuthHeader}
+            loggedInUserId={account._id}
+          />
+
+          <div className="account-actions">
+            <button onClick={logoutUser}>Sign Out</button>
+            <button onClick={() => setShowDeleteModal(true)}>
+              Delete Account
             </button>
           </div>
-        </div>
-      )}
-      <Reviews
-        reviews={reviews}
-        setReviews={setReviews}
-        API_PREFIX={API_PREFIX}
-        editable={false}
-        addAuthHeader={addAuthHeader}
-      />
 
-      <div className="account-actions">
-        <button onClick={logoutUser}>Sign Out</button>
-        <button onClick={() => setShowDeleteModal(true)}>Delete Account</button>
-      </div>
-
-      {showDeleteModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <p>Are you sure you want to delete your account?</p>
-            <button onClick={deleteAccount}>Yes, Delete</button>
-            <button onClick={() => setShowDeleteModal(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
+          {showDeleteModal && (
+            <div className="modal">
+              <div className="modal-content">
+                <p>Are you sure you want to delete your account?</p>
+                <button onClick={deleteAccount}>Yes, Delete</button>
+                <button onClick={() => setShowDeleteModal(false)}>Cancel</button>
+              </div>
+            </div>
+          )}
+        </div>)}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import "../Styles/FavoritesPage.scss";
 
 const FavoritesPage = ({ API_PREFIX, addAuthHeader }) => {
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading status
 
   useEffect(() => {
     // Fetch favorite restaurants
@@ -16,10 +17,12 @@ const FavoritesPage = ({ API_PREFIX, addAuthHeader }) => {
       .then((res) => res.json())
       .then((data) => {
         setFavorites(data.favorites || []);
+        setLoading(false); // Set loading to false once data is fetched
       })
-      .catch((error) =>
-        console.error("Error fetching favorite restaurants:", error)
-      );
+      .catch((error) => {
+        console.error("Error fetching favorite restaurants:", error);
+        setLoading(false); // Ensure loading is false even if an error occurs
+      });
   }, [API_PREFIX, addAuthHeader]);
 
   // Remove a restaurant from favorites
@@ -51,7 +54,9 @@ const FavoritesPage = ({ API_PREFIX, addAuthHeader }) => {
     <div className="favorites-page">
       <h2>Favorites</h2>
       <div className="favorites-list">
-        {favorites.length > 0 ? (
+        {loading ? (
+          <p>Loading favorites...</p> // Display this while loading
+        ) : favorites.length > 0 ? (
           favorites.map((restaurant) => (
             <Card
               key={restaurant._id}
