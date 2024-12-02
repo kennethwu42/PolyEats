@@ -3,6 +3,18 @@ import { Button, Modal, Form, Dropdown } from "react-bootstrap";
 import { useFilters } from "./FiltersContext";
 import "../../Styles/RestaurantFilter.scss";
 
+const LABEL_MAP = {
+  CreditDebit: "Credit/Debit",
+  GlutenFree: "Gluten-Free",
+  M: "Monday",
+  T: "Tuesday",
+  W: "Wednesday",
+  TH: "Thursday",
+  F: "Friday",
+  SAT: "Saturday",
+  SUN: "Sunday"
+};
+
 const RestaurantFilter = () => {
   const { filters, setFilters } = useFilters();
   const [showModal, setShowModal] = useState(false);
@@ -81,6 +93,8 @@ const RestaurantFilter = () => {
       sortOrder: order
     }));
   };
+
+  const mapLabel = (key) => LABEL_MAP[key] || key;
 
   return (
     <>
@@ -191,7 +205,7 @@ const RestaurantFilter = () => {
                 <Form.Check
                   key={payment}
                   type="checkbox"
-                  label={payment}
+                  label={mapLabel(payment)}
                   name={payment}
                   checked={filterValues.accepted_payments[payment] || false}
                   onChange={(e) => handleCheckboxChange(e, "accepted_payments")}
@@ -204,7 +218,7 @@ const RestaurantFilter = () => {
                 <Form.Check
                   key={type}
                   type="checkbox"
-                  label={type}
+                  label={mapLabel(type)}
                   name={type}
                   checked={filterValues.nutrition_types[type] || false}
                   onChange={(e) => handleCheckboxChange(e, "nutrition_types")}
@@ -217,7 +231,7 @@ const RestaurantFilter = () => {
                 <Form.Check
                   key={day}
                   type="checkbox"
-                  label={day}
+                  label={mapLabel(day)}
                   name={day}
                   checked={filterValues.hours[day] || false}
                   onChange={(e) => handleCheckboxChange(e, "hours")}

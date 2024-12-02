@@ -187,6 +187,7 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
+  appearance: button;
   -webkit-appearance: button;
 }
 
@@ -278,6 +279,7 @@ textarea {
    * 2. Correct the outline style in Safari.
    */
 [type="search"] {
+  appearance: textfield;
   -webkit-appearance: textfield;
   /* 1 */
   outline-offset: -2px;
@@ -784,6 +786,7 @@ button,
 [type="submit"],
 [type="reset"],
 [type="button"] {
+  appearance: none;
   -webkit-appearance: none;
   display: inline-block;
   border: 1px solid #0366ee;
@@ -1009,6 +1012,7 @@ legend {
 
 select {
   color: #404040;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAvklEQVQoFY2QMQqEMBBFv7ERa/EMXkGw11K8QbDXzuN4BHv7QO6ifUgj7v4UAdlVM8Uwf+b9YZJISnlqrfEUZVlinucnBGKaJgghbiHOyLyFKIoCbdvecpyReYvo/Ma2bajrGtbaC58kCdZ1RZ7nl/4/4d5EsO/7nzl7IUtodBexMMagaRrs+06JLMvcNWmaOv2W/C/TMAyD58dxROgSmvxFFMdxoOs6lliWBXEcuzokXRbRoJRyvqqqQvye+QDMDz1D6yuj9wAAAABJRU5ErkJggg==)

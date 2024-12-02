@@ -1,20 +1,13 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
-import complexService from "../express-backend/services/complex-service.js";
-import restaurantService from "../express-backend/services/restaurant-service.js";
-import {
-  authenticateUser,
-  registerUser,
-  loginUser
-} from "../express-backend/auth.js";
-import authRoutes from "../express-backend/auth.js";
-import accountService from "../express-backend/services/account-service.js";
-import reviewService from "../express-backend/services/review-service.js";
-import { upload, convertHeicToJpeg } from "./uploadMiddleware.js";
-
-dotenv.config();
+import multer from "multer";
+import complexService from "./services/complex-service.js";
+import restaurantService from "./services/restaurant-service.js";
+import { authenticateUser, registerUser, loginUser } from "./auth.js";
+import authRoutes from "./auth.js";
+import accountService from "./services/account-service.js";
+import reviewService from "./services/review-service.js";
 
 const { MONGO_CONNECTION_STRING } = process.env;
 
@@ -33,80 +26,111 @@ app.listen(port, () => {
 
 app.use("/uploads", express.static("../uploads"));
 
+// Configure multer storage
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage });
+
 //register auth routes
 app.use("/auth", authRoutes);
+
+app.get("/", (req, res) => {
+  res.status(200).send({ message: "Welcome to PolyEats!" });
+});
 
 app.post("/signup", registerUser);
 app.post("/login", loginUser);
 
 //post a review for a specific restaurant
-app.post("/review", authenticateUser, (req, res) => {
-  const reviewData = {
-    ...req.body,
-    author: req.user._id
-  };
+app.post(
+  "/review",
+  authenticateUser,
+  upload.array("pictures", 10), // Accept up to 10 images
+  async (req, res) => {
+    try {
+      const { item, review, rating, restaurant } = req.body;
+      const userId = req.user._id;
 
-  reviewService
-    .postReview(reviewData)
-    .then((review) => res.status(201).send(review))
-    .catch((error) => res.status(500).send({ error: "Error posting review" }));
-});
+      // Use helper function to handle review creation and picture uploads
+      const newReview = await reviewService.postReview({
+        item,
+        review,
+        rating,
+        restaurant,
+        author: userId,
+        pictures: req.files // Pass the files directly to the helper
+      });
+
+      res.status(201).send(newReview);
+    } catch (error) {
+      console.error("Error posting review:", error);
+      res.status(500).send({ error: "Error posting review" });
+    }
+  }
+);
 
 //delete a review
-app.delete("/review/:reviewId", authenticateUser, (req, res) => {
+app.delete("/review/:reviewId", authenticateUser, async (req, res) => {
   const { reviewId } = req.params;
+  const userId = req.user._id;
 
-  reviewService
-    .deleteReview(reviewId, req.user._id)
-    .then(() =>
-      res.status(200).send({ message: "Review deleted successfully" })
-    )
-    .catch((error) => res.status(500).send({ error: "Error deleting review" }));
+  try {
+    // Use helper function to handle review deletion and picture cleanup
+    await reviewService.deleteReview(reviewId, userId);
+
+    res.status(200).send({ message: "Review and associated pictures deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting review:", error);
+    res.status(500).send({ error: "Error deleting review" });
+  }
 });
+
 
 //upload or update profile picture
 app.post(
   "/account/profile-pic",
   authenticateUser,
   upload.single("profile_pic"),
-  convertHeicToJpeg,
-  (req, res) => {
+  async (req, res) => {
     const userId = req.user._id;
-    const profile_pic = req.file
-      ? `uploads/${req.file.filename}` // Relative path for static serving
-      : "uploads/defaultprofilepic.jpeg";
 
-    accountService
-      .updateProfilePicture(userId, profile_pic)
-      .then((updatedAccount) =>
-        res.status(200).send({
-          message: "Profile picture updated successfully",
-          profile_pic: updatedAccount.profile_pic
-        })
-      )
-      .catch((error) => {
-        console.error("Error updating profile picture:", error);
-        res.status(500).send({ error: "Error updating profile picture" });
+    if (!req.file) {
+      return res.status(400).send({ error: "No file uploaded" });
+    }
+
+    try {
+      // Use the helper function to handle the profile picture update
+      const updatedAccount = await accountService.updateProfilePicture(
+        userId,
+        req.file
+      );
+
+      res.status(200).send({
+        message: "Profile picture updated successfully",
+        profile_pic: updatedAccount.profile_pic
       });
+    } catch (error) {
+      console.error("Error updating profile picture:", error);
+      res.status(500).send({ error: "Error updating profile picture" });
+    }
   }
 );
 
 //delete profile picture
-app.post("/account/profile-pic/remove", authenticateUser, (req, res) => {
+app.post("/account/profile-pic/remove", authenticateUser, async (req, res) => {
   const userId = req.user._id;
 
-  accountService
-    .removeProfilePicture(userId)
-    .then((updatedAccount) =>
-      res.status(200).send({
-        message: "Profile picture removed successfully",
-        profile_pic: updatedAccount.profile_pic
-      })
-    )
-    .catch((error) => {
-      console.error("Error removing profile picture:", error);
-      res.status(500).send({ error: "Error removing profile picture" });
+  try {
+    // Use the helper function to handle profile picture removal
+    const updatedAccount = await accountService.removeProfilePicture(userId);
+
+    res.status(200).send({
+      message: "Profile picture removed successfully",
+      profile_pic: updatedAccount.profile_pic
     });
+  } catch (error) {
+    console.error("Error removing profile picture:", error);
+    res.status(500).send({ error: "Error removing profile picture" });
+  }
 });
 
 //get account details
@@ -180,7 +204,7 @@ app.delete("/account/delete", authenticateUser, (req, res) => {
 });
 
 //get list of complexes
-app.get("/complexes", (req, res) => {
+app.get("/complexes", authenticateUser, (req, res) => {
   const name = req.query.name;
 
   complexService
@@ -194,7 +218,7 @@ app.get("/complexes", (req, res) => {
 });
 
 //get all restaurants within a specific complex (with filters/sorting if desired)
-app.get("/complexes/:complexId/restaurants", (req, res) => {
+app.get("/complexes/:complexId/restaurants", authenticateUser, (req, res) => {
   const complexId = req.params.complexId;
   const {
     name,
@@ -280,7 +304,7 @@ app.get("/complexes/:complexId/restaurants", (req, res) => {
   */
 
 //get specific restaurant information by id (with reviews)
-app.get("/restaurant/:id", (req, res) => {
+app.get("/restaurant/:id", authenticateUser, (req, res) => {
   const restaurantId = req.params.id;
 
   restaurantService

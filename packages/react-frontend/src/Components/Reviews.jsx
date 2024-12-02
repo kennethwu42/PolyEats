@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "../Styles/Reviews.scss";
+import ImageList from "./Restaurant/ImageList.jsx";
 
 const Reviews = ({
   reviews,
@@ -21,6 +22,8 @@ const Reviews = ({
     rating: "",
     pictures: []
   });
+  const [showImageList, setShowImageList] = useState(false);
+  const [currentImages, setCurrentImages] = useState([]);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -32,23 +35,30 @@ const Reviews = ({
     setReviewData({ ...reviewData, pictures: Array.from(e.target.files) });
   };
 
+  const handleImageClick = (pictures) => {
+    setCurrentImages(pictures);
+    setShowImageList(true);
+  };
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
 
-    const reviewPayload = {
-      item: reviewData.item,
-      review: reviewData.review,
-      rating: reviewData.rating,
-      restaurant: restaurantId
-    };
+    const formData = new FormData();
+    formData.append("item", reviewData.item);
+    formData.append("review", reviewData.review);
+    formData.append("rating", reviewData.rating);
+    formData.append("restaurant", restaurantId);
+
+    // Add each picture to the FormData
+    if (reviewData.pictures.length > 0) {
+      reviewData.pictures.forEach((file) => formData.append("pictures", file));
+    }
 
     try {
       const response = await fetch(`${API_PREFIX}/review`, {
         method: "POST",
-        headers: addAuthHeader({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify(reviewPayload)
+        headers: addAuthHeader(),
+        body: formData
       });
 
       if (response.ok) {
@@ -56,7 +66,7 @@ const Reviews = ({
         setReviews((prevReviews) => [newReview, ...prevReviews]);
         toast.success("Review added successfully");
         setShowReviewForm(false);
-        setReviewData({ item: "", review: "", rating: "" });
+        setReviewData({ item: "", review: "", rating: "", pictures: [] });
 
         // Refresh restaurant details to update the average rating
         const restaurantResponse = await fetch(
@@ -66,7 +76,7 @@ const Reviews = ({
         if (restaurantResponse.ok) {
           const data = await restaurantResponse.json();
           setRestaurant(data.restaurant.restaurant);
-          setReviews(data.restaurant.reviews)
+          setReviews(data.restaurant.reviews);
         }
       } else {
         const errorText = await response.text();
@@ -144,7 +154,7 @@ const Reviews = ({
             )}
             <div className="header">
               <img
-                src={`${API_PREFIX}/${review.author?.profile_pic}`}
+                src={`${review.author?.profile_pic}`}
                 alt="Author"
                 className="review-author-pic"
               />
@@ -168,11 +178,13 @@ const Reviews = ({
             </div>
             <div className="review-body">{review.review}</div>
             {review.pictures && review.pictures.length > 0 && (
-              <div className="review-pictures">
+              <div
+                className="review-pictures"
+                onClick={() => handleImageClick(review.pictures)}>
                 {review.pictures.map((pic, i) => (
                   <img
                     key={i}
-                    src={`${API_PREFIX}/${pic}`}
+                    src={pic}
                     alt={`Review Pic ${i + 1}`}
                     className="review-pic"
                   />
@@ -235,6 +247,13 @@ const Reviews = ({
             </form>
           </div>
         </div>
+      )}
+
+      {showImageList && (
+        <ImageList
+          photos={currentImages}
+          onClose={() => setShowImageList(false)}
+        />
       )}
     </div>
   );

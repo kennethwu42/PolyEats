@@ -7,7 +7,7 @@ const BottomNavBar = () => {
 
   return (
     <div className="bottom-nav">
-      <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+      <Link to="/complexes" className={location.pathname === "/complexes" ? "active" : ""}>
         Home
       </Link>
       <Link

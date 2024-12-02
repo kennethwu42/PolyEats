@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Reviews from "./Reviews";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,7 +10,9 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
   const [reviews, setReviews] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showProfilePicOptions, setShowProfilePicOptions] = useState(false);
-  const DEFAULT_PROFILE_PIC = `${API_PREFIX}/uploads/defaultprofilepic.jpeg`;
+  const navigate = useNavigate();
+  const DEFAULT_PROFILE_PIC =
+    "https://storage.googleapis.com/polyeats/profile-pictures/defaultprofilepic.jpeg";
 
   useEffect(() => {
     fetch(`${API_PREFIX}/account/details`, {
@@ -88,6 +91,18 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
           ...prevAccount,
           profile_pic: data.profile_pic
         }));
+
+        // Update reviews with the default profile picture
+        setReviews((prevReviews) =>
+          prevReviews.map((review) => ({
+            ...review,
+            author: {
+              ...review.author,
+              profile_pic: data.profile_pic
+            }
+          }))
+        );
+
         toast.success("Profile picture removed successfully");
         setShowProfilePicOptions(false);
       } else {
@@ -101,12 +116,15 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
 
   // Handle profile picture click
   const handleProfilePicClick = () => {
-    const currentProfilePicUrl = `${API_PREFIX}/${account.profile_pic}`;
-    if (currentProfilePicUrl === DEFAULT_PROFILE_PIC) {
+    if (account.profile_pic === DEFAULT_PROFILE_PIC) {
       document.getElementById("profile-pic-upload").click();
     } else {
       setShowProfilePicOptions(true);
     }
+  };
+
+  const handleLogout = (bool = true) => {
+    logoutUser(bool, () => navigate("/")); // Pass a callback to navigate
   };
 
   // Handle account deletion
@@ -118,7 +136,7 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
       });
       if (response.ok) {
         toast.success("Account deleted successfully");
-        logoutUser(false); // Log the user out
+        handleLogout(false); // Log the user out
       } else {
         toast.error("Error deleting account");
       }
@@ -131,11 +149,13 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
   return (
     <div>
       <h1>Account</h1>
-      {!account ? (<p>Loading account details...</p>) :  // Display this while loading
-        (<div className="account-page">
+      {!account ? (
+        <p>Loading account details...</p> // Display this while loading
+      ) : (
+        <div className="account-page">
           <div className="account-header">
             <img
-              src={`${API_PREFIX}/${account.profile_pic}`}
+              src={`${account.profile_pic}`}
               alt="Profile"
               className="profile-pic"
               onClick={handleProfilePicClick}
@@ -184,7 +204,7 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
           />
 
           <div className="account-actions">
-            <button onClick={logoutUser}>Sign Out</button>
+            <button onClick={handleLogout}>Sign Out</button>
             <button onClick={() => setShowDeleteModal(true)}>
               Delete Account
             </button>
@@ -195,11 +215,14 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
               <div className="modal-content">
                 <p>Are you sure you want to delete your account?</p>
                 <button onClick={deleteAccount}>Yes, Delete</button>
-                <button onClick={() => setShowDeleteModal(false)}>Cancel</button>
+                <button onClick={() => setShowDeleteModal(false)}>
+                  Cancel
+                </button>
               </div>
             </div>
           )}
-        </div>)}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useFilters } from "./FiltersContext"
+import { useFilters } from "./FiltersContext";
 import Cards from "../Cards";
 import RestaurantFilter from "./RestaurantFilter";
 import "../../Styles/App.scss";

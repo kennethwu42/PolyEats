@@ -8,8 +8,8 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Styles/App.scss";
-import Login from "./Login.jsx";
 import { FiltersProvider } from "./Components/Restaurant/FiltersContext.jsx";
+import Login from "./Login.jsx";
 import VerifyEmail from "./VerifyEmail.jsx";
 import ComplexList from "./Components/ComplexList.jsx";
 import RestaurantList from "./Components/Restaurant/RestaurantList.jsx";
@@ -18,6 +18,7 @@ import ImageList from "./Components/Restaurant/ImageList.jsx";
 import BottomNavBar from "./Components/BottomNavBar.jsx";
 import AccountPage from "./Components/AccountPage.jsx";
 import FavoritesPage from "./Components/FavoritesPage.jsx";
+import WelcomePage from "./Components/WelcomePage.jsx";
 
 function MyApp() {
   const API_PREFIX = "http://localhost:8000";
@@ -127,13 +128,14 @@ function MyApp() {
           <div
             style={{ paddingBottom: token !== INVALID_TOKEN ? "60px" : "0" }}>
             <Routes>
+              <Route path="/" element={<WelcomePage />} />
               <Route
                 path="/login"
                 element={
                   token === INVALID_TOKEN ? (
                     <Login handleSubmit={loginUser} />
                   ) : (
-                    <Navigate to="/" replace />
+                    <Navigate to="/complexes" replace />
                   )
                 }
               />
@@ -143,15 +145,15 @@ function MyApp() {
                   token === INVALID_TOKEN ? (
                     <Login handleSubmit={signupUser} buttonLabel="Sign Up" />
                   ) : (
-                    <Navigate to="/" replace />
+                    <Navigate to="/complexes" replace />
                   )
                 }
               />
               <Route
-                path="/"
+                path="/complexes"
                 element={
                   token === INVALID_TOKEN ? (
-                    <Navigate to="/login" replace />
+                    <Navigate to="/" replace />
                   ) : (
                     <ComplexList complexes={complexes} />
                   )
@@ -189,7 +191,7 @@ function MyApp() {
                 path="/account"
                 element={
                   token === INVALID_TOKEN ? (
-                    <Navigate to="/login" replace />
+                    <Navigate to="/" replace />
                   ) : (
                     <AccountPage
                       API_PREFIX={API_PREFIX}
@@ -203,7 +205,7 @@ function MyApp() {
                 path="/favorites"
                 element={
                   token === INVALID_TOKEN ? (
-                    <Navigate to="/login" replace />
+                    <Navigate to="/" replace />
                   ) : (
                     <FavoritesPage
                       API_PREFIX={API_PREFIX}

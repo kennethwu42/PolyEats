@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../../Styles/RestaurantReviews.scss";
 import Reviews from "../Reviews";
 import "../../Styles/Reviews.scss";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ImageList from "./ImageList";
+
+const LABEL_MAP = {
+  CreditDebit: "Credit/Debit",
+  GlutenFree: "Gluten-Free",
+  M: "Monday",
+  T: "Tuesday",
+  W: "Wednesday",
+  TH: "Thursday",
+  F: "Friday",
+  SAT: "Saturday",
+  SUN: "Sunday"
+};
 
 function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
   const { id } = useParams(); // Get restaurant ID from URL
-  const [restaurant, setRestaurant] = useState([]); // Restaurant object
+  const [restaurant, setRestaurant] = useState(null); // Restaurant object
   const [isFavorite, setIsFavorite] = useState(false);
   const [reviews, setReviews] = useState([]); // Reviews array
   const [showOverlay, setShowOverlay] = useState(false); // State to toggle overlay visibility
   const [overlayContent, setOverlayContent] = useState(null); // State to hold dynamic content for overlay
   const [loggedInUserId, setLoggedInUserId] = useState(null);
+  const [showImageList, setShowImageList] = useState(false);
+  const [reviewImages, setReviewImages] = useState([]);
 
   useEffect(() => {
     fetch(`${API_PREFIX}/restaurant/${id}`, {
@@ -23,6 +38,12 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
       .then((json) => {
         setRestaurant(json.restaurant.restaurant);
         setReviews(json.restaurant.reviews);
+
+        // Extract all images from reviews
+        const allImages = json.restaurant.reviews.flatMap(
+          (review) => review.pictures || []
+        );
+        setReviewImages(allImages); // Set pooled images
       })
       .catch((error) => console.error("Error fetching restaurant:", error));
 
@@ -35,7 +56,7 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
         setLoggedInUserId(data.account._id);
       })
       .catch((error) => console.error("Error fetching user details:", error));
-    
+
     // Check if restaurant is in favorites
     fetch(`${API_PREFIX}/account/favorites`, {
       headers: addAuthHeader()
@@ -49,6 +70,12 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
         console.error("Error fetching favorite restaurants:", error)
       );
   }, [API_PREFIX, addAuthHeader, id]);
+
+  // Synchronize reviewImages with updated reviews
+  useEffect(() => {
+    const updatedImages = reviews.flatMap((review) => review.pictures || []);
+    setReviewImages(updatedImages);
+  }, [reviews]);
 
   // Add or remove restaurant from favorites
   const toggleFavorite = async () => {
@@ -86,6 +113,8 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
     setShowOverlay(!showOverlay); // Toggle overlay visibility
   };
 
+  const mapLabel = (key) => LABEL_MAP[key] || key;
+
   return (
     <div>
       <div className="restaurant-top-banner">
@@ -103,11 +132,12 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
               {"☆".repeat(5 - Math.floor(restaurant.avg_rating))}
             </div>
           </div>
-          <Link
-            to={`/restaurant/${id}/images`}
-            className="btn btn-primary see-images-button">
+          <button
+            className="btn btn-primary see-images-button"
+            onClick={() => setShowImageList(true)} // Show ImageList when clicked
+          >
             See Photos
-          </Link>
+          </button>
         </div>
       </div>
       <div className="image-container">
@@ -117,11 +147,15 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
             <div className="overlay-content">
               <p>
                 <strong>Accepted Payments: </strong>
-                {Object.keys(restaurant.accepted_payments).join(", ")}
+                {Object.keys(restaurant.accepted_payments)
+                  .map(mapLabel)
+                  .join(", ")}
               </p>
               <p>
                 <strong>Nutrition Types: </strong>
-                {Object.keys(restaurant.nutrition_types).join(", ")}
+                {Object.keys(restaurant.nutrition_types)
+                  .map(mapLabel)
+                  .join(", ")}
               </p>
               <p>
                 <strong>Delivery: </strong>
@@ -129,15 +163,15 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
               </p>
               <div className="hours">
                 <h2>Hours</h2>
-                <ul>
+                <div>
                   {Object.entries(restaurant.hours).map(
                     ([day, hours], index) => (
-                      <li key={index}>
-                        <strong>{day}</strong>: {hours}
-                      </li>
+                      <div key={index}>
+                        <strong>{mapLabel(day)}:</strong> {hours}
+                      </div>
                     )
                   )}
-                </ul>
+                </div>
               </div>
 
               <button
@@ -180,6 +214,13 @@ function RestaurantReviews({ API_PREFIX, addAuthHeader }) {
         setRestaurant={setRestaurant} // Pass down to update the rating
         loggedInUserId={loggedInUserId}
       />
+
+      {showImageList && (
+        <ImageList
+          photos={reviewImages}
+          onClose={() => setShowImageList(false)} // Close ImageList
+        />
+      )}
     </div>
   );
 }

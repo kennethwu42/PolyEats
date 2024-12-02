@@ -1,11 +1,27 @@
 import reviewModel from "../models/review.js";
 import restaurantModel from "../models/restaurant.js";
+import { uploadFileToGCS, deleteFileFromGCS } from "../googleCloudStorage.js";
 
 //post a new review
 async function postReview(reviewData) {
-  const review = new reviewModel(reviewData);
+  const { pictures, ...reviewDetails } = reviewData;
+
+  // Upload pictures to Google Cloud Storage
+  const pictureUrls = [];
+  if (pictures && pictures.length > 0) {
+    for (const file of pictures) {
+      const publicUrl = await uploadFileToGCS(file, "review-pictures");
+      pictureUrls.push(publicUrl);
+    }
+  }
+
+  // Save the review with the picture URLs
+  const review = new reviewModel({ ...reviewDetails, pictures: pictureUrls });
   const savedReview = await review.save();
+
+  // Update the restaurant's average rating
   await updateRestaurantRating(review.restaurant);
+
   return savedReview;
 }
 
@@ -15,13 +31,36 @@ async function deleteReview(reviewId, accountId) {
     _id: reviewId,
     author: accountId
   });
+
   if (!review) {
     throw new Error("Review not found or you are not authorized to delete it.");
   }
+
+  // Delete pictures associated with the review from Google Cloud Storage
+  if (review.pictures && review.pictures.length > 0) {
+    const deletePromises = review.pictures.map((picture) => {
+      const filePath = picture.split(
+        "https://storage.googleapis.com/polyeats/"
+      )[1];
+      return deleteFileFromGCS(filePath);
+    });
+
+    try {
+      await Promise.all(deletePromises);
+    } catch (error) {
+      console.error(
+        "Error deleting some pictures from Google Cloud:",
+        error.message
+      );
+    }
+  }
+
+  // Delete the review from the database
   await reviewModel.findByIdAndDelete(reviewId);
+
+  // Update the restaurant's average rating
   await updateRestaurantRating(review.restaurant);
 }
-
 //get all reviews for a specific restaurant
 async function getReviewsByRestaurant(restaurantId) {
   return reviewModel

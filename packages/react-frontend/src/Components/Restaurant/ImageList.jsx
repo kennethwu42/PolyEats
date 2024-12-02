@@ -1,29 +1,31 @@
-import React from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Card, Row, Col } from "react-bootstrap";
+import "../../Styles/ImageList.scss";
 
-const photos = [
-  "https://storage.googleapis.com/polyeats/julians_coffee.jpeg",
-  "https://storage.googleapis.com/polyeats/julians_outside.jpg",
-  "https://storage.googleapis.com/polyeats/julians_sammy.jpeg"
-];
+const ImageList = ({ photos, onClose }) => {
+  useEffect(() => {
+    // Add 'modal-open' class to body when the modal is open
+    document.body.classList.add("modal-open");
+    return () => {
+      // Remove 'modal-open' class when the modal is closed
+      document.body.classList.remove("modal-open");
+    };
+  }, []);
 
-function ImageList({ API_PREFIX, addAuthHeader }) {
   return (
-    <div className="card-container">
-      <h1 style={{ textAlign: "center" }}>Photo Album</h1>
+    <div className="image-list-overlay">
+      <button className="close-button" onClick={onClose}>
+        &times;
+      </button>
       <Row>
         {photos.map((photo, index) => (
-          <Col
-            lg={4}
-            md={6}
-            sm={12}
-            className="d-flex justify-content-center mb-4"
-            key={index}>
-            <Card className="card">
+          <Col key={index} lg={4} md={6} sm={12} className="mb-4">
+            <Card>
               <Card.Img
                 variant="top"
-                src={photos[index % photos.length]}
-                alt={photo.title}
+                src={photo}
+                alt={`Photo ${index + 1}`}
+                className="image-list-img"
               />
             </Card>
           </Col>
@@ -31,6 +33,6 @@ function ImageList({ API_PREFIX, addAuthHeader }) {
       </Row>
     </div>
   );
-}
+};
 
 export default ImageList;

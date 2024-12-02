@@ -30,7 +30,8 @@ const AccountSchema = new mongoose.Schema(
     profile_pic: {
       type: String,
       trim: true,
-      default: "uploads/defaultprofilepic.jpeg"
+      default:
+        "https://storage.googleapis.com/polyeats/profile-pictures/defaultprofilepic.jpeg"
     },
     favorites: [
       {

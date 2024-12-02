@@ -14,15 +14,10 @@
     "packages/*"
   ],
   "devDependencies": {
+    "cypress": "^13.16.0",
+    "cypress-file-upload": "^5.0.8",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
     "vite": "^5.4.11"
-  },
-  "dependencies": {
-    "@esbuild/darwin-arm64": "^0.24.0",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.16",
-    "rollup": "^4.27.3",
-    "sass": "^1.81.0"
   }
 }
