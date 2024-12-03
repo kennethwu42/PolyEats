@@ -1,16 +1,17 @@
-
 .welcome-page {
   text-align: center;
-  padding: 200px;
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('../Assets/welcome.png'); 
-  background-size: cover;
+  background-image: url('../Assets/welcome.png');
+  background-size: cover; /* Ensure the image covers the entire viewport */
   background-position: center;
   background-repeat: no-repeat;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
 }
 
 .welcome-buttons {

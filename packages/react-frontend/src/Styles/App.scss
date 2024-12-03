@@ -5,8 +5,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem; // Adjust the gap as needed
-  padding: 1rem; // Adjust the padding as needed
+  align-items: center; /* Center-align children vertically */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove extra padding */
+  width: 100%; /* Ensure container takes full width */
 }
 
 .card {
