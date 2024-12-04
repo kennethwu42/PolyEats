@@ -208,26 +208,6 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
             <label>Settings</label>
             <ListGroup className="custom-list-group">
               <ListGroup.Item className="custom-list-item">
-                <a href="#preferences" className="custom-link">
-                  Preferences
-                </a>
-              </ListGroup.Item>
-              <ListGroup.Item className="custom-list-item">
-                <a href="#account-information" className="custom-link">
-                  Account Information
-                </a>
-              </ListGroup.Item>
-              <ListGroup.Item className="custom-list-item">
-                <a href="#email-notifications" className="custom-link">
-                  Email Notifications
-                </a>
-              </ListGroup.Item>
-              <ListGroup.Item className="custom-list-item">
-                <a href="#privacy-information" className="custom-link">
-                  Privacy Information
-                </a>
-              </ListGroup.Item>
-              <ListGroup.Item className="custom-list-item">
                 <a href="#log-out" className="custom-link" onClick={logoutUser}>
                   Log Out
                 </a>
