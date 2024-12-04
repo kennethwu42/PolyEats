@@ -15,6 +15,15 @@
   margin: 0.5rem; // Optional: additional margin
 }
 
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-body {
+  background-color: #cfdfe3;
+}
+
 .top-image img {
   height: auto; // Maintain aspect ratio
   display: block;
@@ -26,4 +35,10 @@
   width: 100%; /* Ensure container takes full width */
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.heading {
+  font-weight: bold;
+  font-size: 28px;
+  padding-left:20px;
 }

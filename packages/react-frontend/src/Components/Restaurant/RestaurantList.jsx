@@ -66,7 +66,7 @@ const RestaurantList = ({ API_PREFIX, addAuthHeader }) => {
         <img src={logo} alt="Top Banner" />
       </div>
       <div className="card-container">
-        <h2>Restaurants</h2>
+        <h2 className="heading">Restaurants</h2>
         <RestaurantFilter setFilters={setFilters} />
         {restaurants.map((restaurant, index) => (
           <Cards
