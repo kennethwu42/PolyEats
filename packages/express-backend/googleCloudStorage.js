@@ -4,6 +4,29 @@ import dotenv from "dotenv";
 //load environment variables
 dotenv.config();
 
+const fs = require("fs");
+const path = require("path");
+
+if (process.env.GOOGLE_CLOUD_KEY_BASE64) {
+  const decodedKey = Buffer.from(
+    process.env.GOOGLE_CLOUD_KEY_BASE64,
+    "base64"
+  ).toString("utf-8");
+  const tempKeyPath = path.join(__dirname, "google-cloud-key.json");
+
+  // Write the decoded key to a temporary file
+  fs.writeFileSync(tempKeyPath, decodedKey);
+
+  // Set GOOGLE_APPLICATION_CREDENTIALS to the temp key path
+  process.env.GOOGLE_APPLICATION_CREDENTIALS = tempKeyPath;
+} else {
+  console.error(
+    "GOOGLE_CLOUD_KEY_BASE64 is not set in the environment variables."
+  );
+  process.exit(1); // Exit the process if the key is missing
+}
+
+
 // Initialize Google Cloud Storage
 const storage = new Storage();
 const bucket = storage.bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKET);
