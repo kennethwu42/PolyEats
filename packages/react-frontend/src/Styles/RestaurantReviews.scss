@@ -1,7 +1,10 @@
 .restaurant-top-banner {
   position: relative;
-  display: inline-block;
-  width: 100%;
+  display: flex;
+  width: calc(100% + 33px); /* Adjust this value based on scrollbar width */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove extra padding */
+  left: calc((100vw - 100%) / -2); /* Centering adjustment */
 }
 
 .restaurant-image {
@@ -14,6 +17,7 @@
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
   text-align: left;
+  padding-left: 0;
   font-weight: bold;
   color: #000;
   z-index: 2;
@@ -107,12 +111,12 @@
 }
 
 .details {
-  font-size: 1rem;
+  font-size: 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
-  color: rgb(71, 71, 71);
+  color: rgb(0, 0, 0);
 }
 
 .bookmark {

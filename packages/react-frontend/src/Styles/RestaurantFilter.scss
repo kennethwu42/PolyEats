@@ -39,7 +39,8 @@
 .filter-sort-buttons {
   display: flex;
   gap: 10px; /* Adds spacing between the buttons */
-  justify-content: center; /* Centers the buttons horizontally */
+  justify-content: left; /* Centers the buttons horizontally */
+  padding-left: 10px;
 }
 
 .dropdown-menu {

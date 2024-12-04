@@ -10,7 +10,7 @@
     h2 {
       margin: 0;
       font-size: 1.5rem;
-      color: #333;
+      color: rgb(0, 0, 0);
     }
 
     .add-review-button {
@@ -33,7 +33,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
-    background-color: #fff;
+    background-color: #ddefde;
     margin-bottom: 15px;
 
     .delete-review-button {
@@ -73,7 +73,7 @@
     .author-info {
       font-size: 16px;
       font-weight: bold;
-      color: #333;
+      color: rgb(0, 0, 0);
     }
   }
 
@@ -85,12 +85,12 @@
     .item-name {
       font-size: 18px;
       font-weight: bold;
-      color: #333;
+      color: rgb(0, 0, 0);
     }
 
     .review-date {
       font-size: 14px;
-      color: #777;
+      color: rgb(67, 67, 67);
       white-space: nowrap;
     }
   }
@@ -103,7 +103,7 @@
 
   .review-body {
     font-size: 16px;
-    color: #555;
+    color: rgb(0, 0, 0);
   }
 }
 
@@ -177,7 +177,7 @@
 .modal-content input[type="file"]:focus {
   outline: none; /* Remove default outline */
   border-color: #45a65b; /* Darker green border on focus */
-  background-color: #d9f2db; /* Slightly darker green background on focus */
+  background-color: #97ab99; /* Slightly darker green background on focus */
 }
 
 .review-pictures {
