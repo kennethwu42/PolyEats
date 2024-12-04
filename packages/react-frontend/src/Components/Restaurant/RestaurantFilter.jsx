@@ -99,14 +99,14 @@ const RestaurantFilter = () => {
   return (
     <>
       <div className="filter-sort-buttons">
-        <Button variant="primary" onClick={() => setShowModal(true)}>
+        <Button className="btn" onClick={() => setShowModal(true)}>
           Filter
         </Button>
         <Dropdown>
-          <Dropdown.Toggle variant="secondary" id="dropdown-sort">
+          <Dropdown.Toggle className="btn" id="dropdown-sort">
             Sort
           </Dropdown.Toggle>
-          <Dropdown.Menu>
+          <Dropdown.Menu className="dropdown-menu">
             <Dropdown.Item onClick={() => handleSortChange("name", "asc")}>
               Name, A-Z
             </Dropdown.Item>
@@ -137,7 +137,7 @@ const RestaurantFilter = () => {
           <button
             className="close-modal-button"
             onClick={() => setShowModal(false)}>
-            &times; {/* HTML entity for the 'X' symbol */}
+            &times;
           </button>
         </Modal.Header>
         <Modal.Body>
@@ -155,7 +155,7 @@ const RestaurantFilter = () => {
             <Form.Group controlId="filterRating">
               <Form.Label>Minimum Rating</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 placeholder="Enter rating (1-5)"
                 name="minRating"
                 value={filterValues.minRating || ""}

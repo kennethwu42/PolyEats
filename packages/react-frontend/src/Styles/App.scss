@@ -16,8 +16,14 @@
 }
 
 .top-image img {
-  width: 100%; // Full width
   height: auto; // Maintain aspect ratio
   display: block;
   margin-bottom: 1rem;
+  width: 100vw;
+}
+
+.card-container {
+  width: 100%; /* Ensure container takes full width */
+  padding-left: 15px;
+  padding-right: 15px;
 }

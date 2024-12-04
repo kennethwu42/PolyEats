@@ -19,12 +19,123 @@
     }
 }
 
-.filter-sort-buttons {
-    display: flex;
-    gap: 10px; /* Adds spacing between the buttons */
-    margin-bottom: 20px; /* Adds spacing below the buttons */
+.filter-sort-buttons .btn {
+  background-color: #60c874;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.filter-sort-buttons .btn {
-    text-align: center; /* Centers the text */
+.filter-sort-buttons .btn:hover {
+  background-color: #45a65b; /* Darker green on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.filter-sort-buttons {
+  display: flex;
+  gap: 10px; /* Adds spacing between the buttons */
+  justify-content: center; /* Centers the buttons horizontally */
+}
+
+.dropdown-menu {
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ddd; /* Light border */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.dropdown-item {
+  padding: 10px 15px; /* Add spacing */
+  font-size: 16px;
+}
+
+.dropdown-item:hover {
+  background-color: #eaf7e5; /* Light green hover */
+  color: #000; /* Black text */
+}
+
+/* Filter Modal */
+.modal-content {
+  border-radius: 10px; /* Rounded corners */
+  padding: 10px; /* Add internal spacing */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.modal-header {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000; /* Black text for header */
+  text-align: center;
+}
+
+.modal-body {
+  padding: 10px; /* Add spacing inside the modal */
+}
+
+/* Input Fields (Text and Number) */
+.modal-body input[type="text"],
+.modal-body input[type="number"],
+.modal-body select {
+  border: 1px solid #ccc; /* Default border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px;
+  width: 100%; /* Full width */
+  transition: border-color 0.2s ease, background-color 0.2s ease; /* Smooth transition */
+}
+
+.modal-body input[type="text"]:focus,
+.modal-body input[type="number"]:focus,
+.modal-body select:focus {
+  border-color: #60c874; /* Green border on focus */
+  background-color: #eaf7e5; /* Light green background on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Checkboxes */
+.modal-body .form-check-input {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 20px;
+  height: 20px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.modal-body .form-check-input:checked {
+  background-color: #60c874; /* Green background for checked checkboxes */
+  border-color: #60c874; /* Green border */
+}
+
+/* Checkboxes Label Styling */
+.modal-body .form-check-label {
+  font-weight: bold; /* Make labels bold */
+  margin-left: 10px; /* Add space next to checkbox */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between; /* Space out buttons */
+  padding-top: 15px;
+}
+
+/* Clear and Apply Filters Buttons */
+.modal-footer .btn {
+  width: 45%; /* Ensure buttons take up equal space */
+  background-color: #60c874; /* Green background */
+  color: #000; /* Black text */
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-footer .btn:hover {
+  background-color: #45a65b; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale effect */
 }

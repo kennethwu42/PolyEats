@@ -28,8 +28,8 @@ const ComplexList = ({ complexes }) => {
       <div className="top-image">
         <img src={logo} alt="Top Banner" />
       </div>
-      <h2>Dining Complexes</h2>
       <div className="card-container">
+        <h2>Dining Complexes</h2>
         {complexes.map((complex, index) => (
           <Cards
             key={index}
