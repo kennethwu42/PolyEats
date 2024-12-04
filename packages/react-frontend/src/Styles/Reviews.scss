@@ -14,17 +14,15 @@
     }
 
     .add-review-button {
-      background-color: #007bff;
-      color: #fff;
+      background-color: #60c874; /* Green background */
+      color: #000; /* Black text */
       border: none;
       border-radius: 5px;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
+      padding: 10px 20px; /* Adjust padding */
+      font-size: 16px; /* Standard button font size */
+      font-weight: bold;
       cursor: pointer;
-
-      &:hover {
-        background-color: #0056b3;
-      }
+      transition: background-color 0.2s ease, transform 0.2s ease;
     }
   }
 
@@ -137,15 +135,6 @@
           color: #333;
         }
 
-        input,
-        textarea {
-          margin-bottom: 15px;
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          width: 100%;
-        }
-
         button {
           margin-top: 10px;
           padding: 10px;
@@ -156,24 +145,39 @@
           &:first-of-type {
             background-color: #154606;
             color: white;
-
-            &:hover {
-              background-color: #154606;
-            }
           }
 
           &:last-of-type {
             background-color: #dc3545;
             color: white;
-
-            &:hover {
-              background-color: #c82333;
-            }
           }
         }
       }
     }
   }
+}
+
+.modal-content input[type="text"],
+.modal-content textarea,
+.modal-content input[type="number"],
+.modal-content input[type="file"] {
+  border: 1px solid #60c874; /* Green border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Inner spacing */
+  width: 100%; /* Full width */
+  font-size: 16px; /* Font size for readability */
+  background-color: #eaf7e5; /* Light green background */
+  color: #000; /* Black text for contrast */
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content textarea:focus,
+.modal-content input[type="number"]:focus,
+.modal-content input[type="file"]:focus {
+  outline: none; /* Remove default outline */
+  border-color: #45a65b; /* Darker green border on focus */
+  background-color: #d9f2db; /* Slightly darker green background on focus */
 }
 
 .review-pictures {

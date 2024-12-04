@@ -65,8 +65,8 @@
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
-.modal-header {
-  font-size: 20px;
+.modal-title {
+  font-size: 26px;
   font-weight: bold;
   color: #000; /* Black text for header */
   text-align: center;
@@ -95,13 +95,24 @@
   outline: none; /* Remove default outline */
 }
 
+.modal-body .form-label {
+  font-size: 20px; /* Make field names slightly larger */
+  font-weight: bold; /* Bold for emphasis */
+  color: #000; /* Black for strong contrast */
+  margin-bottom: 5px; /* Add spacing between the label and input */
+}
+
+/* Checkboxes Section */
+.modal-body .form-group {
+  margin-bottom: 20px; /* Add spacing between groups */
+}
+
 /* Checkboxes */
 .modal-body .form-check-input {
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  width: 20px;
-  height: 20px;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  width: 18px; /* Reduce checkbox size */
+  height: 18px;
+  margin-right: 10px; /* Add spacing between the checkbox and the label */
+  border: 1px solid #ccc; /* Subtle border for visibility */
 }
 
 .modal-body .form-check-input:checked {
@@ -109,10 +120,11 @@
   border-color: #60c874; /* Green border */
 }
 
-/* Checkboxes Label Styling */
 .modal-body .form-check-label {
-  font-weight: bold; /* Make labels bold */
-  margin-left: 10px; /* Add space next to checkbox */
+  font-size: 16px; /* Make options slightly smaller */
+  color: #4a4a4a; /* Charcoal color for contrast */
+  font-weight: normal; /* Normal weight to differentiate from headings */
+  margin-left: 5px; /* Add space next to the checkbox */
 }
 
 .modal-footer {
@@ -122,8 +134,21 @@
 }
 
 /* Clear and Apply Filters Buttons */
-.modal-footer .btn {
-  width: 45%; /* Ensure buttons take up equal space */
+.modal-footer .btn-secondary {
+  width: 48%; /* Equal button width */
+  background-color: #dc3545; /* Red background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-footer .btn-primary {
+  width: 48%; /* Equal button width */
   background-color: #60c874; /* Green background */
   color: #000; /* Black text */
   border: none;

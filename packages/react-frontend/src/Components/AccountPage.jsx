@@ -170,6 +170,7 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
             <h2>
               {account.firstname} {account.lastname}
             </h2>
+            <p className="email-text">{account.calpoly_email}</p>
           </div>
 
           {showProfilePicOptions && (

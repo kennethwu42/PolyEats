@@ -28,6 +28,9 @@ function Login(props) {
 
   return (
     <div className="login-page">
+      <h1 className="login-title">
+        {props.buttonLabel === "Sign Up" ? "Create an Account" : "Welcome Back"}
+      </h1>
       <form>
         {props.buttonLabel === "Sign Up" && (
           <div>
