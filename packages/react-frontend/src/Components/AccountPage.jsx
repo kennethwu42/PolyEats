@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import Reviews from "./Reviews";
 import "react-toastify/dist/ReactToastify.css";
 import "../Styles/AccountPage.scss";
+import logo from "../Assets/logo.png";
+import "../Styles/App.scss";
 
 const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
   const [account, setAccount] = useState(null);
@@ -146,13 +148,17 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
     }
   };
 
-  return (
-    <div>
-      <h1>Account</h1>
+return (
+  <div>
+    <div className="top-image">
+      <img src={logo} alt="Top Banner" />
+    </div>
+    <h2 className="heading">Account</h2>
+    <div className="account-page">
       {!account ? (
         <p>Loading account details...</p> // Display this while loading
       ) : (
-        <div className="account-page">
+        <>
           <div className="account-header">
             <img
               src={`${account.profile_pic}`}
@@ -224,10 +230,11 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
               </div>
             </div>
           )}
-        </div>
+        </>
       )}
     </div>
-  );
+  </div>
+);
 };
 
 export default AccountPage;

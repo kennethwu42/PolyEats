@@ -1,53 +1,27 @@
 .favorites-page {
-  padding: 20px;
+  .remove-favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545; // Red background
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
 
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
+    &:hover {
+      background-color: #c82333; // Darker red on hover
+    }
   }
 
-  .favorites-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-  }
-
-  .card {
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    text-align: center;
-
-    img {
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .card-body {
-      padding: 10px;
-
-      .card-title {
-        margin: 0;
-        font-size: 18px;
-        color: #333;
-      }
-
-      .card-text {
-        margin: 5px 0;
-        color: #777;
-      }
-    }
-
-    .card-footer {
-      background: transparent;
-      border-top: none;
-
-      .btn-danger {
-        padding: 8px 15px;
-        border-radius: 5px;
-        background: #ff1a1a;
-      }
-    }
+  .card-container {
+    position: relative; // Enable positioning for remove button
   }
 }

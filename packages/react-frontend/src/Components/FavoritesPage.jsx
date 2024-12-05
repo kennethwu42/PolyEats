@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../Styles/FavoritesPage.scss";
+import logo from "../Assets/logo.png";
+import "../Styles/App.scss";
+import Cards from "./Cards";
 
 const FavoritesPage = ({ API_PREFIX, addAuthHeader }) => {
   const [favorites, setFavorites] = useState([]);
-  const [loading, setLoading] = useState(true); // State to track loading status
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch favorite restaurants
     fetch(`${API_PREFIX}/account/favorites`, {
       headers: addAuthHeader()
     })
       .then((res) => res.json())
       .then((data) => {
         setFavorites(data.favorites || []);
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching favorite restaurants:", error);
-        setLoading(false); // Ensure loading is false even if an error occurs
+        setLoading(false);
       });
   }, [API_PREFIX, addAuthHeader]);
 
-  // Remove a restaurant from favorites
   const removeFavorite = async (restaurantId) => {
     try {
       const response = await fetch(
@@ -52,41 +51,31 @@ const FavoritesPage = ({ API_PREFIX, addAuthHeader }) => {
 
   return (
     <div className="favorites-page">
-      <h2>Favorites</h2>
-      <div className="favorites-list">
+      <div className="top-image">
+        <img src={logo} alt="Top Banner" />
+      </div>
+      <h2 className="heading">Favorites</h2>
+      <div className="card-container">
         {loading ? (
-          <p>Loading favorites...</p> // Display this while loading
+          <p>Loading favorites...</p>
         ) : favorites.length > 0 ? (
           favorites.map((restaurant) => (
-            <Card
+            <Cards
               key={restaurant._id}
-              style={{
-                width: "18rem",
-                margin: "10px",
-                display: "inline-block",
-                verticalAlign: "top"
-              }}>
-              <Link
-                to={`/restaurant/${restaurant._id}`}
-                style={{ textDecoration: "none", color: "inherit" }}>
-                <Card.Img
-                  variant="top"
-                  src={restaurant.image}
-                  alt={restaurant.name}
-                />
-                <Card.Body>
-                  <Card.Title>{restaurant.name}</Card.Title>
-                  <Card.Text>{restaurant.cuisine}</Card.Text>
-                </Card.Body>
-              </Link>
-              <Card.Footer>
-                <Button
-                  variant="danger"
-                  onClick={() => removeFavorite(restaurant._id)}>
-                  Remove from Favorites
-                </Button>
-              </Card.Footer>
-            </Card>
+              image={restaurant.image}
+              title={restaurant.name}
+              link={`/restaurant/${restaurant._id}`}
+              removeButton={
+                <button
+                  className="remove-favorite"
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent card link navigation
+                    removeFavorite(restaurant._id);
+                  }}>
+                  &times;
+                </button>
+              }
+            />
           ))
         ) : (
           <p>No favorites yet</p>
