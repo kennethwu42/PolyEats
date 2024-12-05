@@ -91,12 +91,20 @@
 }
 
 .overlay-content {
-  background-color: #fff;
+  background-color: #fff; /* White background for the overlay */
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   width: 65%;
+  color: #000; /* Make all text in the overlay black */
+}
+
+.overlay-content p,
+.overlay-content h2,
+.overlay-content strong,
+.overlay-content div {
+  color: #000; /* Ensure all child elements inherit black text color */
 }
 
 .close-overlay-button {
@@ -126,6 +134,7 @@
   cursor: pointer;
   color: gray;
   transition: color 0.3s ease;
+  padding-right: 0;
 }
 
 .bookmark.favorited {
@@ -134,10 +143,4 @@
 
 .bookmark:hover {
   color: orange;
-}
-
-.no-bullets {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
 }

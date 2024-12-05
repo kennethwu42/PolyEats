@@ -180,6 +180,12 @@
   background-color: #97ab99; /* Slightly darker green background on focus */
 }
 
+.modal-content form label {
+  margin-bottom: 10px;
+  color: #000; /* Set all label text to black */
+  font-weight: bold; /* Optional: Make the text bold for better visibility */
+}
+
 .review-pictures {
   display: flex;
   flex-wrap: wrap;

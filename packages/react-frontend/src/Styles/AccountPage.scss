@@ -2,6 +2,7 @@ h1 {
   margin: 0;
   font-size: 22px;
   padding: 20px;
+  color: black;
 }
 
 .account-page {
@@ -29,6 +30,7 @@ h1 {
     h2 {
       margin: 0;
       font-size: 22px;
+      color: black;
     }
 
     .email-text {
@@ -38,35 +40,11 @@ h1 {
   }
   }
 
-  .reviews-section {
-    margin-top: 20px;
-
-    h3 {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .review-card {
-      background-color: #ddd;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-
-      h4 {
-        font-size: 16px;
-        margin-bottom: 5px;
-      }
-
-      .review-meta {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-
-        .stars {
-          color: gold;
-        }
-      }
-    }
+    .reviews-section {
+    width: 90vw; /* Make reviews stretch to the full width */
+    max-width: 350px; /* Optional: Set a max width for readability */
+    margin: 0 auto; /* Center the reviews section */
+    border-radius: 8px; /* Optional: Add rounded corners */
   }
 
   .account-actions {
