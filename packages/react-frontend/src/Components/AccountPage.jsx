@@ -217,7 +217,7 @@ const AccountPage = ({ API_PREFIX, addAuthHeader, logoutUser }) => {
             <div className="modal">
               <div className="modal-content">
                 <p>Are you sure you want to delete your account?</p>
-                <button onClick={deleteAccount}>Yes, Delete</button>
+                <button onClick={deleteAccount}>Delete Account</button>
                 <button onClick={() => setShowDeleteModal(false)}>
                   Cancel
                 </button>
